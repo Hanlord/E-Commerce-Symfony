@@ -33,13 +33,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $role = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $status = null;
 
     #[ORM\ManyToOne]
     private ?address $fk_address = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $surname = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
 
 
     public function getId(): ?int
@@ -124,18 +127,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(string $role): self
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
     public function getStatus(): ?string
     {
         return $this->status;
@@ -156,6 +147,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFkAddress(?address $fk_address): self
     {
         $this->fk_address = $fk_address;
+
+        return $this;
+    }
+
+    public function getSurname(): ?string
+    {
+        return $this->surname;
+    }
+
+    public function setSurname(string $surname): self
+    {
+        $this->surname = $surname;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
