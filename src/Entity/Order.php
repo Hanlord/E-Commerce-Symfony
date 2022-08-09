@@ -25,7 +25,7 @@ class Order
     private ?int $quantity = null;
 
     #[ORM\ManyToOne]
-    private ?shipment $fk_shipment = null;
+    private ?Shipment $fk_shipment = null;
 
     public function getId(): ?int
     {
@@ -68,12 +68,12 @@ class Order
         return $this;
     }
 
-    public function getFkShipment(): ?shipment
+    public function getFkShipment(): ?Shipment
     {
         return $this->fk_shipment;
     }
 
-    public function setFkShipment(?shipment $fk_shipment): self
+    public function setFkShipment(?Shipment $fk_shipment): self
     {
         $this->fk_shipment = $fk_shipment;
 

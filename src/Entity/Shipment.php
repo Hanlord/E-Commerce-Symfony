@@ -21,7 +21,7 @@ class Shipment
     private ?\DateTimeInterface $shipDate = null;
 
     #[ORM\ManyToOne]
-    private ?address $fk_address = null;
+    private ?Address $fk_address = null;
 
     public function getId(): ?int
     {
@@ -52,12 +52,12 @@ class Shipment
         return $this;
     }
 
-    public function getFkAddress(): ?address
+    public function getFkAddress(): ?Address
     {
         return $this->fk_address;
     }
 
-    public function setFkAddress(?address $fk_address): self
+    public function setFkAddress(?Address $fk_address): self
     {
         $this->fk_address = $fk_address;
 

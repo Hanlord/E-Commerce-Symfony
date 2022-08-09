@@ -18,13 +18,13 @@ class Cart
     private ?\DateTimeInterface $datetime = null;
 
     #[ORM\ManyToOne]
-    private ?product $fk_product = null;
+    private ?Product $fk_product = null;
 
     #[ORM\ManyToOne]
-    private ?user $fk_user = null;
+    private ?User $fk_user = null;
 
     #[ORM\ManyToOne]
-    private ?order $fk_order = null;
+    private ?Order $fk_order = null;
 
     public function getId(): ?int
     {
@@ -43,36 +43,36 @@ class Cart
         return $this;
     }
 
-    public function getFkProduct(): ?product
+    public function getFkProduct(): ?Product
     {
         return $this->fk_product;
     }
 
-    public function setFkProduct(?product $fk_product): self
+    public function setFkProduct(?Product $fk_product): self
     {
         $this->fk_product = $fk_product;
 
         return $this;
     }
 
-    public function getFkUser(): ?user
+    public function getFkUser(): ?User
     {
         return $this->fk_user;
     }
 
-    public function setFkUser(?user $fk_user): self
+    public function setFkUser(?User $fk_user): self
     {
         $this->fk_user = $fk_user;
 
         return $this;
     }
 
-    public function getFkOrder(): ?order
+    public function getFkOrder(): ?Order
     {
         return $this->fk_order;
     }
 
-    public function setFkOrder(?order $fk_order): self
+    public function setFkOrder(?Order $fk_order): self
     {
         $this->fk_order = $fk_order;
 

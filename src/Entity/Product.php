@@ -29,10 +29,10 @@ class Product
     private ?int $availability = null;
 
     #[ORM\ManyToOne]
-    private ?category $fk_category = null;
+    private ?Category $fk_category = null;
 
     #[ORM\ManyToOne]
-    private ?discount $fk_discount = null;
+    private ?Discount $fk_discount = null;
 
     public function getId(): ?int
     {
@@ -99,24 +99,24 @@ class Product
         return $this;
     }
 
-    public function getFkCategory(): ?category
+    public function getFkCategory(): ?Category
     {
         return $this->fk_category;
     }
 
-    public function setFkCategory(?category $fk_category): self
+    public function setFkCategory(?Category $fk_category): self
     {
         $this->fk_category = $fk_category;
 
         return $this;
     }
 
-    public function getFkDiscount(): ?discount
+    public function getFkDiscount(): ?Discount
     {
         return $this->fk_discount;
     }
 
-    public function setFkDiscount(?discount $fk_discount): self
+    public function setFkDiscount(?Discount $fk_discount): self
     {
         $this->fk_discount = $fk_discount;
 

@@ -36,7 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $status = null;
 
     #[ORM\ManyToOne]
-    private ?address $fk_address = null;
+    private ?Address $fk_address = null;
 
     #[ORM\Column(length: 255)]
     private ?string $surname = null;
@@ -139,12 +139,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getFkAddress(): ?address
+    public function getFkAddress(): ?Address
     {
         return $this->fk_address;
     }
 
-    public function setFkAddress(?address $fk_address): self
+    public function setFkAddress(?Address $fk_address): self
     {
         $this->fk_address = $fk_address;
 
