@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Address;
 use App\Form\RegistrationFormType;
+use App\Form\AddressType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,10 +20,17 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
+        $address = new Address();
+        $formAddress = $this->createForm(AddressType::class, $address);
         $form = $this->createForm(RegistrationFormType::class, $user);
+        
         $form->handleRequest($request);
+        $formAddress->handleRequest($request);
         $userStatus = "Good";
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
+            $address = $formAddress->getData();
+            $user->setFkAddress($address);
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -30,7 +39,7 @@ class RegistrationController extends AbstractController
                 ),
             $user->setStatus($userStatus)
             );
-
+            $entityManager->persist($address);
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
@@ -40,6 +49,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'addressForm' => $formAddress->createView(),
         ]);
     }
 }
