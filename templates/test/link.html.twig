@@ -1,0 +1,7 @@
+{% extends 'test/index.html.twig' %}
+
+
+{% block btn %}
+<a href="{{path('app_profile', {id: user.id}) }}" class="btn btn-warning"> profile </a>
+{% endblock %}
+
