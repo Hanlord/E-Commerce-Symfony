@@ -26,6 +26,9 @@ class Cart
     #[ORM\ManyToOne]
     private ?Order $fk_order = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $status = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class Cart
     public function setFkOrder(?Order $fk_order): self
     {
         $this->fk_order = $fk_order;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
