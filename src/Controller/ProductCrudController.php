@@ -29,6 +29,13 @@ class ProductCrudController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // $image = $form->get('image')->getData();
+            // $product->setImage($image);
+            // $form->get('image')->setData(true);
+            if($form->get('image')->getData()==null){
+                $image = 'https://cdn.pixabay.com/photo/2015/11/19/21/10/glasses-1052010_1280.jpg';
+                $product->setImage($image);
+            }
             $productRepository->add($product, true);
 
             return $this->redirectToRoute('app_product_crud_index', [], Response::HTTP_SEE_OTHER);

@@ -8,7 +8,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ProductType extends AbstractType
 {
@@ -17,17 +20,28 @@ class ProductType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'attr' => ['class' => 'form-control mb-1',  'style' => 'width:30%'] ])
-            ->add('description')
-            ->add('price')
-            ->add('image')
-            ->add('availability')
+            ->add('description', TextareaType::class, [
+                'attr' => ['class' => 'form-control mb-1',  'style' => 'width:30%'] ])
+            ->add('price', IntegerType::class, [
+                'attr' => ['class' => 'form-control mb-1',  'style' => 'width:30%'] ])
+            ->add('image', TextType::class, [
+                // 'mapped'=>false,
+                'required'=>false,
+                'attr' => ['class' => 'form-control mb-1',  'style' => 'width:30%'] ])
+            ->add('availability', ChoiceType::class, [
+                'choices' => ['available' => '1', 'not available' => '0'],
+                'attr' => ['class' => 'form-select mb-1',  'style' => 'width:30%'] ])
             ->add('fk_category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
+                'label'=>'Category',
+                'attr' => ['class' => 'form-select mb-1',  'style' => 'width:30%']
             ])
             ->add('fk_discount', EntityType::class, [
                 'class' => Discount::class,
                 'choice_label' => 'name',
+                'label'=>'Discount',
+                'attr' => ['class' => 'form-select mb-1',  'style' => 'width:30%']
             ])  
         ;
     }

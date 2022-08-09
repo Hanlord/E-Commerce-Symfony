@@ -5,8 +5,11 @@
 {% block body %}
      <div class="container my-5">
     <h1 class="text-center">Catalog</h1>
-     <a href="{{ path('app_product_crud_new') }}">Create new</a>
-
+    {% if is_granted('ROLE_ADMIN') %}
+       <a href="{{ path('app_product_crud_new') }}">Create new</a>
+    {% endif %}
+    
+  
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5 text-center">
 {% for product in products %}
 <div class="col">
