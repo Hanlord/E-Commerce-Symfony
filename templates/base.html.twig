@@ -19,62 +19,70 @@
 		{% endblock %}
 	</head>
 	<body>
-		{% block navbar %}
-			<nav class="navbar navbar-expand-lg bg-light">
-				<div class="container-fluid">
-					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-					<div class="collapse navbar-collapse" id="navbarSupportedContent">
-						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-							{% if app.user %}
-								<li class="nav-item">
-									<a href="{{ path('app_profile', {'id':app.user.id})}}">{{ app.user.name }}</a>
-								</li>
-							<li class="nav-item">
-								<a href="/logout" class="btn btn-danger">
-									LOG OUT
-								</a>
-							</li>
-              <li class="nav-item">
-								<a href="/" class="btn btn-success">
-									Cart
-								</a>
-							</li>
+    {% block navbar %}
+	    <nav class="navbar navbar-expand-lg bg-light h-30">
+			<div class="container-fluid">
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+	<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        {% if app.user %}
+            <li class="nav-item dropdown">
+                        <a class="navbar-brand dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="{{ path('app_profile', {'id':app.user.id})}}">
+                        <img src="{{ asset('pictures/' ~ app.user.image)}}" alt="" width="40" height="40" style="border-radius:50%;">
+                        </a>
+                        {# <a class="nav-link dropdown-toggle" href="{{ path('app_profile', {'id':app.user.id})}}" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ app.user.name }}</a> #}
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ path('app_profile', {'id':app.user.id})}}">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Cart</a></li>
+                            <li><a class="dropdown-item" href="/logout">Log Out</a></li>
+                        </ul>
+            </li>
+            {% else %}
+                 <li class="nav-item">
+                        <a class="nav-link text-primary" aria-current="page" href="/register">Register</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link text-primary" aria-current="page" href="/login">Sign in</a>
+                    </li>
 						{% endif %}
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								Catalog
-							</a>
-							<ul class="dropdown-menu">
-              <li>
-									<a class="dropdown-item" href="{{ path('app_product_crud_index')}}">All</a>
-								</li>
-								<li>
-                                	<a class="dropdown-item" href="#">Book</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href="#">Film</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href="#">Games</a>
-								</li>
-                                <li>
-									<a class="dropdown-item" href="#">Music</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-					<form class="d-flex" role="search">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="{{ path('app_product_crud_index')}}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Catalog</a>
+						<ul class="dropdown-menu">
+                            <li>
+						        <a class="dropdown-item" href="{{ path('app_product_crud_index')}}">All</a>
+							</li>
+							<li>
+                            	<a class="dropdown-item" href="#">Book</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="#">Film</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="#">Games</a>
+							</li>
+                            <li>
+								<a class="dropdown-item" href="#">Music</a>
+							</li>
+						</ul>
+					</li>
+		</ul>
+					<div class="d-flex" role="search">
 						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
 						<button class="btn btn-outline-success" type="submit">Search</button>
-					</form>
+                        <button class="btn btn-success ms-3" type="submit">Cart</button>
+					</div>
 				</div>
 			</div>
-		</body>
-	</html>
-</nav>{% endblock %}{% block body %}{% endblock %}
+</nav>
+{% endblock %}
+
+{% block body %}{% endblock %}
 {% block footer %}
 <footer class="footer">
     <div class="p-3 d-flex justify-content-center align-items-center social">
