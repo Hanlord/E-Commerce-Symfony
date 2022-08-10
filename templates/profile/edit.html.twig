@@ -1,0 +1,19 @@
+{% extends 'profile/index.html.twig' %}
+
+{% block title %}Edit{% endblock %}
+
+{% block edit %}
+<a href="/" class="btn btn-primary"> Home </a>
+    <h1>Register</h1>
+
+    {{ form_start(registrationForm) }}
+        {# {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }} #}
+        {{form_widget(registrationForm)}}
+        {{form_widget(addressForm)}}
+        {# {{ form_row(registrationForm.agreeTerms) }} #}
+        <button type="submit" class="btn btn-success">Edit</button>
+    {{ form_end(registrationForm) }}
+{% endblock %}

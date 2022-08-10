@@ -14,7 +14,11 @@
         {{form_widget(registrationForm)}}
         {{form_widget(addressForm)}}
         {# {{ form_row(registrationForm.agreeTerms) }} #}
+{% block edit %}
+    <button type="submit" class="btn btn-success">Register</button>
 
-        <button type="submit" class="btn btn-success">Register</button>
+    {% endblock %}
+        
     {{ form_end(registrationForm) }}
+    
 {% endblock %}
