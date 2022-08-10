@@ -2,3 +2,43 @@
 body {
     background-color: lightgray;
 }
+
+.submit-btn {
+    text-decoration: none;
+    padding: 5px 5px;
+    background: rgb(5, 131, 174);
+    margin: 10px auto;
+    color: #fff;
+    max-width: 150px;
+    transition: all 0.2s linear;
+    text-align: center;
+}
+
+.submit-btn:hover {
+    background: rgb(2, 2, 66);
+    color: #fff;
+}
+
+.copyright {
+    margin-bottom: 0;
+    padding-bottom: 10px;
+}
+
+.footer {
+    background-color: black;
+    color: white;
+}
+
+i {
+    font-size: 30px
+}
+
+.social {
+    gap: 3rem
+}
+
+@media screen and (max-width: 480px) {
+    .social {
+        gap: 10px
+    }
+}

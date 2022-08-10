@@ -26,10 +26,6 @@ class ProductType extends AbstractType
                 'attr' => ['class' => 'form-control mb-1',  'style' => 'width:30%'] ])
             ->add('price', IntegerType::class, [
                 'attr' => ['class' => 'form-control mb-1',  'style' => 'width:30%'] ])
-            ->add('image', TextType::class, [
-                // 'mapped'=>false,
-                'required'=>false,
-                'attr' => ['class' => 'form-control mb-1',  'style' => 'width:30%'] ])
 
             ->add('image', FileType::class, [
                 'label' => 'Upload Picture',
@@ -50,6 +46,7 @@ class ProductType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid image file',
                     ])
                 ],
+                'attr' => ['class'=>'form-control mb-1', 'style' => 'width:30%']
             ])
 
             ->add('availability', ChoiceType::class, [

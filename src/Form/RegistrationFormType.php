@@ -12,18 +12,26 @@ use App\Service\FileUploader;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
+            ->add('email', EmailType::class, [
+                'label_attr'=>['class'=>'form-label'],
+                'row_attr'=>['class'=>'col-md-6'],
+                'attr' => ['class' => 'form-control mb-1', 'placeholder'=>'username@email.com'] ])
             ->add('plainPassword', PasswordType::class, [
+                'label'=>'Password',
+                'label_attr'=>['class'=>'form-label'],
+                'row_attr'=>['class'=>'col-md-6'],
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+                'attr' => ['autocomplete' => 'new-password', 'class'=>'form-control mb-1', 'placeholder'=>'**********'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
@@ -36,8 +44,14 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('name')
-            ->add('surname')
+            ->add('name', TextType::class, [
+                'label_attr'=>['class'=>'form-label'],
+                'row_attr'=>['class'=>'col-md-6'],
+                'attr' => ['class' => 'form-control mb-1', 'placeholder'=>'first name'] ])
+            ->add('surname', TextType::class, [
+                'label_attr'=>['class'=>'form-label'],
+                'row_attr'=>['class'=>'col-md-6'],
+                'attr' => ['class' => 'form-control mb-1', 'placeholder'=>'last name'] ])
             ->add('image', FileType::class, [
                 'label' => 'Upload Picture',
  
@@ -57,6 +71,9 @@ class RegistrationFormType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid image file',
                     ])
                 ],
+                'label_attr'=>['class'=>'form-label'],
+                'row_attr'=>['class'=>'col-12'],
+                'attr' => ['class'=>'form-control mb-1']
             ])
         ;
     }

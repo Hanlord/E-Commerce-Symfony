@@ -6,20 +6,27 @@
      <div class="container my-5">
     <h1 class="text-center">Catalog</h1>
     {% if is_granted('ROLE_ADMIN') %}
-       <a href="{{ path('app_product_crud_new') }}">Create new</a>
+       <a href="{{ path('app_product_crud_new') }}" class="btn btn-success">Create new</a>
     {% endif %}
     
   
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5 text-center">
 {% for product in products %}
 <div class="col">
-   <div class="card" style="width: 18rem;">
+   <div class="" style="width: 18rem;">
    <img src="{{ asset('pictures/' ~ product.image)}}">
-  <img src="{{ product.image }}" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">{{ product.name }}</h5>
     <p class="card-text">{{ product.price }}</p>
     <a href="{{ path('app_product_crud_show', {'id': product.id}) }}" class="btn btn-secondary">Details</a>
+        {% if is_granted('ROLE_USER') %} 
+    <a href="" class="btn btn-primary">Add to cart</a>
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_product_crud_edit', {'id': product.id}) }}"  class="btn btn-warning">Edit</a>
+    {{ include('product_crud/_delete_form.html.twig') }}
+    {% endif %}
+
   </div>
 </div>
   </div>
