@@ -7,9 +7,12 @@
 <p>{{user.name}}</p>
 <p>{{user.email}}</p>
 <p>{{address.address}}<p>
+<a href="{{ path('app_profile_edit', {'id': user.id}) }}">edit</a>
+<a href="{{ path('app_profile_delete', {'id': user.id}) }}">delete</a>
+{% block edit %}
 
 
-
+{% endblock %}
 
 
 {% endblock %}
