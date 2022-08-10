@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\FileUploader;
+use Doctrine\Persistence\ManagerRegistry;
 
 #[Route('/product/crud')]
 class ProductCrudController extends AbstractController
@@ -22,7 +24,7 @@ class ProductCrudController extends AbstractController
     }
 
     #[Route('/new', name: 'app_product_crud_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ProductRepository $productRepository): Response
+    public function new(Request $request, ProductRepository $productRepository,FileUploader $fileUploader): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
@@ -32,6 +34,13 @@ class ProductCrudController extends AbstractController
             // $image = $form->get('image')->getData();
             // $product->setImage($image);
             // $form->get('image')->setData(true);
+            $pic = $form->get('image')->getData();
+            if ($pic){
+                $pictureFileName = $fileUploader->upload($pic);
+                $product->setImage($pictureFileName);
+              }
+
+              
             if($form->get('image')->getData()==null){
                 $image = 'https://cdn.pixabay.com/photo/2015/11/19/21/10/glasses-1052010_1280.jpg';
                 $product->setImage($image);

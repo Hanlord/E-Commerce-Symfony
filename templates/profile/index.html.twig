@@ -3,9 +3,12 @@
 {% block title %}Profile{% endblock %}
 
 {% block body %}
+<img src="{{ asset('pictures/' ~ user.image)}}">
 <p>{{user.name}}</p>
 <p>{{user.email}}</p>
 <p>{{address.address}}<p>
+
+
 
 
 

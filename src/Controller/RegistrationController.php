@@ -13,11 +13,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Service\FileUploader;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Doctrine\Persistence\ManagerRegistry;
+
 
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager,ManagerRegistry $doctrine, FileUploader $fileUploader): Response
     {
         $user = new User();
         $address = new Address();
@@ -30,6 +35,11 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
             $address = $formAddress->getData();
+            $pic = $form->get('image')->getData();
+            if ($pic){
+                $pictureFileName = $fileUploader->upload($pic);
+                $user->setImage($pictureFileName);
+              }
             $user->setFkAddress($address);
             // encode the plain password
             $user->setPassword(

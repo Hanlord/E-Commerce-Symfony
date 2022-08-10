@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class ProductType extends AbstractType
 {
@@ -28,6 +30,28 @@ class ProductType extends AbstractType
                 // 'mapped'=>false,
                 'required'=>false,
                 'attr' => ['class' => 'form-control mb-1',  'style' => 'width:30%'] ])
+
+            ->add('image', FileType::class, [
+                'label' => 'Upload Picture',
+     
+                'mapped' => false,
+    
+                'required' => false,
+     
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpeg',
+                            'image/jpg',
+                            'image/webp',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image file',
+                    ])
+                ],
+            ])
+
             ->add('availability', ChoiceType::class, [
                 'choices' => ['available' => '1', 'not available' => '0'],
                 'attr' => ['class' => 'form-select mb-1',  'style' => 'width:30%'] ])

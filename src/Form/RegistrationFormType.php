@@ -8,6 +8,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use App\Service\FileUploader;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\HttpFoundation\Request;
 
 class RegistrationFormType extends AbstractType
 {
@@ -34,7 +38,26 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('name')
             ->add('surname')
-            ->add('image')
+            ->add('image', FileType::class, [
+                'label' => 'Upload Picture',
+ 
+                'mapped' => false,
+ 
+                'required' => false,
+ 
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpeg',
+                            'image/jpg',
+                            'image/webp',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image file',
+                    ])
+                ],
+            ])
         ;
     }
 
