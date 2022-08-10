@@ -12,10 +12,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Service\FileUploader;
 use Doctrine\Persistence\ManagerRegistry;
 
-#[Route('/product/crud')]
+// #[Route('/product/crud')]
 class ProductCrudController extends AbstractController
 {
-    #[Route('/', name: 'app_product_crud_index', methods: ['GET'])]
+    #[Route('/product/crud/', name: 'app_product_crud_index', methods: ['GET'])]
     public function index(ProductRepository $productRepository): Response
     {
         return $this->render('product_crud/index.html.twig', [
@@ -23,7 +23,7 @@ class ProductCrudController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_product_crud_new', methods: ['GET', 'POST'])]
+    #[Route('admin/product/crud/new', name: 'app_product_crud_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProductRepository $productRepository,FileUploader $fileUploader): Response
     {
         $product = new Product();
@@ -56,7 +56,7 @@ class ProductCrudController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_crud_show', methods: ['GET'])]
+    #[Route('/product/crud/{id}', name: 'app_product_crud_show', methods: ['GET'])]
     public function show(Product $product): Response
     {
         return $this->render('product_crud/show.html.twig', [
@@ -64,7 +64,7 @@ class ProductCrudController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_product_crud_edit', methods: ['GET', 'POST'])]
+    #[Route('admin/product/crud/{id}/edit', name: 'app_product_crud_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
     {
         $form = $this->createForm(ProductType::class, $product);
