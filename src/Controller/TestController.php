@@ -12,7 +12,9 @@ class TestController extends AbstractController
     #[Route('/', name: 'app_test')]
     public function index(ManagerRegistry $doctrine): Response
     {
+        $user = $this->getUser();
         return $this->render('test/index.html.twig', [
+            'user' => $user,
         ]);
     }
     #[Route('/test/{id}', name: 'app_test_link')]
