@@ -82,7 +82,7 @@ class ProductCrudController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_crud_delete', methods: ['POST'])]
+    #[Route('admin/product/crud/{id}', name: 'app_product_crud_delete', methods: ['POST'])]
     public function delete(Request $request, Product $product, ProductRepository $productRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
