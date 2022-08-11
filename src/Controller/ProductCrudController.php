@@ -39,12 +39,7 @@ class ProductCrudController extends AbstractController
                 $pictureFileName = $fileUploader->upload($pic);
                 $product->setImage($pictureFileName);
               }
-
               
-            if($form->get('image')->getData()==null){
-                $image = 'https://cdn.pixabay.com/photo/2015/11/19/21/10/glasses-1052010_1280.jpg';
-                $product->setImage($image);
-            }
             $productRepository->add($product, true);
 
             return $this->redirectToRoute('app_product_crud_index', [], Response::HTTP_SEE_OTHER);
@@ -65,12 +60,17 @@ class ProductCrudController extends AbstractController
     }
 
     #[Route('admin/product/crud/{id}/edit', name: 'app_product_crud_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
+    public function edit(Request $request, Product $product, ProductRepository $productRepository,FileUploader $fileUploader): Response
     {
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $pic = $form->get('image')->getData();
+            if ($pic){
+                $pictureFileName = $fileUploader->upload($pic);
+                $product->setImage($pictureFileName);
+            }
             $productRepository->add($product, true);
 
             return $this->redirectToRoute('app_product_crud_index', [], Response::HTTP_SEE_OTHER);
