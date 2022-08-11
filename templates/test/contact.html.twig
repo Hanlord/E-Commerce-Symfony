@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{# Read me: Styles for google map, if we use it here, it will overwrite the base! #}
+{# {% block stylesheets %}
+<style type= "text/css">
+    
+    #map {
+        margin: auto;
+        height: 80%;
+        width: 60%;
+    }
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+{% endblock %} #}
+
+{% block body %}
+<style type= "text/css">
+    {# TODO: Styles for google map, it has to be placed at the write place!!!  #}
+    #map {
+        margin: auto;
+        height: 80%;
+        width: 60%;
+    }
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+<h3> CONTACT US</h3>
+
+{{ form_start(contactform) }}
+    {{ form_widget(contactform) }}
+    {# <button class="btn">{{ button_label|default('Save') }}</button> #}
+{{ form_end(contactform) }}
+
+{% if data.sent %}
+    <div class="container" >
+        <hr><p>Thank you {{ data.name }} for contacting us, Your message has been sent successfully!</p><br>
+        <hr>
+        <p>Message details:</p><br>
+        <p>From: {{data.email }}</p>
+        <p>To: {{data.mail_to }}</p>
+        <p>Content: {{data.message }}</p>
+    </div>
+{% endif %}
+
+    <hr>
+    <h2 class="text-center">How to find us:</h2>
+    <div id="map"></div>
+        <script>
+            var map;
+            function initMap() {
+                var codefactory = { 
+                    lat: 48.19648548241829, 
+                    lng: 16.35948713595641
+                };
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: codefactory,
+                    zoom: 14
+                })
+                pinpoint = new google.maps.Marker({
+                    position: codefactory,
+                    map: map
+                })
+            }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtjaD-saUZQ47PbxigOg25cvuO6_SuX3M&callback=initMap" async defer></script>
+{% endblock %}
