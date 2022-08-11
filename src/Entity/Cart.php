@@ -93,4 +93,18 @@ class Cart
 
         return $this;
     }
+    private $orderRef;
+    // ...
+    public function getOrderRef(): ?Order
+    {
+        return $this->orderRef;
+    }
+
+    public function setOrderRef(?Order $orderRef): self
+    {
+        $this->orderRef = $orderRef;
+
+        return $this;
+    }
+    
 }

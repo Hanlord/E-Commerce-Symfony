@@ -34,7 +34,7 @@
                         {# <a class="nav-link dropdown-toggle" href="{{ path('app_profile', {'id':app.user.id})}}" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ app.user.name }}</a> #}
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ path('app_profile', {'id':app.user.id})}}">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Cart</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_shopping_cart') }}">Cart</a></li>
                             <li><a class="dropdown-item" href="/logout">Log Out</a></li>
                         </ul>
             </li>
@@ -74,7 +74,7 @@
 					<div class="d-flex" role="search">
 						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
 						<button class="btn btn-outline-success" type="submit">Search</button>
-                        <button class="btn btn-success ms-3" type="submit">Cart</button>
+                        <a class="btn btn-success ms-3" type="submit" href="{{ path('app_shopping_cart') }}">Cart</a>
 					</div>
 				</div>
 			</div>
