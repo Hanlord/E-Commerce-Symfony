@@ -23,10 +23,12 @@ class ShoppingCartController extends AbstractController
         
         return $this->render('shopping_cart/index.html.twig', [
             'products' => $productRepository->findAll(),
+            
         ]);
     }
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder)
     {
+        
         $builder->add('quantity');
         $builder->add('add', SubmitType::class, [
             'label' => 'Add to cart'

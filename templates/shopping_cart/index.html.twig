@@ -4,6 +4,7 @@
 
 {% block body %}
     <div class="container mt-4">
+    <div class="content1 text-center"></div>
         <h1>Your Cart</h1>
         {# {% if products.items.count > 0 %} #}
             <div class="row mt-4">
@@ -32,4 +33,21 @@
         </div>
     </div>
 </div>
+ 
+    <script>
+        function joke(){
+            const xml = new XMLHttpRequest();
+            xml.open("GET","joke.php" );
+            xml.onload = function(){
+                console.log(xml.responseText)
+                const jokeArray = JSON.parse(xml.responseText);
+                console.log(jokeArray);
+                let content = document.getElementsByClassName('content1')[0];
+                content.innerHTML = `<h1>${jokeArray.joke}</h1>`;
+
+            };
+            xml.send();
+        }
+        joke()
+    </script>
 {% endblock %}
