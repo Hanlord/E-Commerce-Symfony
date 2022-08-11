@@ -1,12 +1,20 @@
 @import "bootstrap";
+$submit: rgb(34, 87, 122);
+$submitHover: rgb(34, 87, 122);
+$create:rgb(64, 145, 108);
+$createHover:rgb(45, 106, 79);
+$edit:rgb(255, 218, 61);
+$editHover:rgb(253, 196, 63);
+$textlight:rgb(199, 249, 204);
+$textdark:rgb(8, 28, 21);
 body {
-    background-color: lightgray;
+    background-color: rgb(248, 237, 235);
 }
 
 .submit-btn {
     text-decoration: none;
     padding: 5px 5px;
-    background: rgb(5, 131, 174);
+    background: $submit;
     margin: 10px auto;
     color: #fff;
     max-width: 150px;
@@ -15,8 +23,41 @@ body {
 }
 
 .submit-btn:hover {
-    background: rgb(2, 2, 66);
+    background: $submitHover;
     color: #fff;
+}
+
+.create-btn {
+    text-decoration: none;
+    padding: 5px 5px;
+    background: $create;
+    margin: 10px auto;
+    color: #fff;
+    max-width: 150px;
+    transition: all 0.2s linear;
+    text-align: center;
+}
+
+.create-btn:hover {
+    background: $createHover;
+    color: #fff;
+}
+
+.edit-btn {
+    text-decoration: none;
+    padding: 5px 5px;
+    background: $edit;
+    margin: 10px auto;
+    color: $textdark;
+    min-width: 50px;
+    max-width: 150px;
+    transition: all 0.2s linear;
+    text-align: center;
+}
+
+.edit-btn:hover {
+    background: $editHover;
+    color: $textdark;
 }
 
 .copyright {

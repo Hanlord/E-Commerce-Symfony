@@ -3,12 +3,17 @@
 {% block title %}Profile{% endblock %}
 
 {% block body %}
-<img src="{{ asset('pictures/' ~ user.image)}}">
-<p>{{user.name}}</p>
-<p>{{user.email}}</p>
-<p>{{address.address}}<p>
-<a href="{{ path('app_profile_edit', {'id': user.id}) }}">edit</a>
-<a href="{{ path('app_profile_delete', {'id': user.id}) }}">delete</a>
+<div class="container my-5 d-flex justify-content-center">
+<div class="profile">
+<img src="{{ asset('pictures/' ~ user.image)}}" style="height:10rem;width:10rem;border-radius:50%;" class="my-2">
+<p>First name: {{user.name}}</p>
+<p>Last name: {{user.surname}}</p>
+<p>Email: {{user.email}}</p>
+<p>Address: {{address.address}}, {{address.zip}} {{address.city}}, {{address.country}}<p>
+<a href="{{ path('app_profile_edit', {'id': user.id}) }}" class="btn edit-btn">Edit</a>
+<a href="{{ path('app_profile_delete', {'id': user.id}) }}">Delete profile</a>
+</div>
+</div>
 {% block edit %}
 
 

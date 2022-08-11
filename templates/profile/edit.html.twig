@@ -3,17 +3,18 @@
 {% block title %}Edit{% endblock %}
 
 {% block edit %}
-<a href="/" class="btn btn-primary"> Home </a>
-    <h1>Register</h1>
+<div class="container w-50 my-3">
+    <h1>Edit your profile</h1>
 
     {{ form_start(registrationForm) }}
         {# {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }} #}
-        {{form_widget(registrationForm)}}
-        {{form_widget(addressForm)}}
+        {{form_widget(registrationForm, {'attr': {'class': 'row g-3 mb-3'}})}}
+        {{form_widget(addressForm, {'attr': {'class': 'row g-3'}})}}
         {# {{ form_row(registrationForm.agreeTerms) }} #}
-        <button type="submit" class="btn btn-success">Edit</button>
+        <button type="submit" class="btn edit-btn">Edit</button>
     {{ form_end(registrationForm) }}
+    </div>
 {% endblock %}

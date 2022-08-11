@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Log in{% endblock %}
 
 {% block body %}
+<div class="container my-5 d-flex align-items-center justify-content-center" style="height:65vh;">
 <form method="post">
+    <h1 class="h3 mb-3 font-weight-normal text-center">Please sign in</h1>
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -13,16 +15,17 @@
             You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
-
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
+    <div class="row mb-3">
+        <label for="inputEmail" class="form-label">Email</label>
+        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+    </div>
+    <div class="row mb-3">
+    <label for="inputPassword" class="form-label">Password</label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
-    >
+    >  </div>
 
     {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
@@ -35,10 +38,11 @@
         </div>
     #}
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-<a href="/register" class="btn btn-warning"> Register </a>
+<button class="btn submit-btn" type="submit">Sign in</button>
 
+<div class="row">
+<a href="/register"> Create an account </a>
+</div>
 </form>
+</div>
 {% endblock %}
