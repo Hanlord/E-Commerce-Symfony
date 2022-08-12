@@ -1,31 +1,25 @@
 <?php
 
 namespace App\Controller;
-use App\Repository\OrderRepository;
+use App\Entity\Cart;
+use App\Entity\Order;
+use App\Entity\Product;
+use App\Entity\Shipment;
+use App\Entity\User;
 use App\Repository\ProductRepository;
-use App\Repository\ReviewRepository;
 use App\Repository\CartRepository;
-
+use App\Repository\OrderRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Cart;
-use App\Entity\User;
-use Symfony\Component\Form\AbstractType;
-use App\Entity\Product;
-use App\Form\AddToCartType;
-use App\Manager\CartManager;
-use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ShoppingCartController extends AbstractController
 {
     #[Route('/shopping/cart', name: 'app_shopping_cart')]
-    public function index(ProductRepository $productRepository, ManagerRegistry $doctrine): Response
+    public function index(ManagerRegistry $doctrine): Response
     {
         $fkuser = $this->getUser();
         $cartitem = $doctrine->getRepository(Cart::class);
@@ -45,6 +39,32 @@ class ShoppingCartController extends AbstractController
         $now = new \DateTime("now");
         $shopcart->setDatetime($now);
         $cart->add($shopcart, true);
+        return $this->redirectToRoute('app_product_crud_index');
+    }
+    #[Route('/shopping/cart/delete/{id}', name: 'app_product_delete_cart')]
+    public function deleteCart($id, CartRepository $cart, ManagerRegistry $doctrine): Response
+    {
+        $cartitem = $doctrine->getRepository(Cart::class)->find($id);
+        $cart->remove($cartitem, true);
+        return $this->redirectToRoute('app_shopping_cart');
+    }
+    #[Route('/shopping/order', name: 'app_add_order')]
+    public function addOrder(OrderRepository $orderRep, CartRepository $cartRep, ManagerRegistry $doctrine): Response
+    {
+        $fkuser = $this->getUser();
+        $order = new Order();
+        $shipment = $doctrine->getRepository(Shipment::class)->find(1);
+        $order->setFkShipment($shipment);
+        $now = new \DateTime("now");
+        $order->setOrderDate($now);
+        $order->setItems("stuff");
+        $order->setQuantity(1);
+        $cartitems = $doctrine->getRepository(Cart::class)->findBy(array('fk_user' => $fkuser, 'status' => "0"));
+        foreach ($cartitems as $items => $item) {
+            $item->setStatus("ordered");
+            $cartRep->add($item, true);
+        }
+        $orderRep->add($order, true);
         return $this->redirectToRoute('app_product_crud_index');
     }
 }

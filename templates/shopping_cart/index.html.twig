@@ -14,8 +14,8 @@
                         <div class="row text-muted">{{product.fkProduct.name}}</div>
                         <div class="row">{{product.fkProduct.availability}}</div>
                     </div>
-                    {# <a class="btn" href="{{ path('app_cart_delete', {'id': product.id}) }}">delete</a> #}
-                    <div class="col">&euro;{{ product.fkProduct.price}}  <span class="close">&#10005;</span></div>
+                    <a class="btn" href="{{ path('app_product_delete_cart', {'id': product.id}) }}">delete<span class="close">&#10005;</span></a>
+                    <div class="col">&euro;{{ product.fkProduct.price}}</div>
                 </div>
             </div>
         {% endfor %}
@@ -30,7 +30,7 @@
                 </li>
             </ul>
             <div class="card-body">
-                <a href="#" class="btn btn-warning w-100">Checkout</a>
+                <a href="{{ path('app_add_order') }}" class="btn btn-warning w-100">Checkout</a>
             </div>
         </div>
     </div> 
