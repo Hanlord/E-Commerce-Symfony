@@ -21,7 +21,7 @@
     <p class="card-text">{{ product.price }} €</p>
     <a href="{{ path('app_product_crud_show', {'id': product.id}) }}" class="btn btn-secondary">Details</a>
         {% if is_granted('ROLE_USER') %} 
-    <a href="" class="btn btn-primary">Buy</a>
+    <a href="{{ path('app_product_add', {'id': product.id}) }}" class="btn btn-primary">Buy</a>
     {% endif %}
     {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ path('app_product_crud_edit', {'id': product.id}) }}"  class="btn edit-btn">Edit</a>

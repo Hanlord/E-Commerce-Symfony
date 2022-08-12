@@ -10,10 +10,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Cart;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use App\Entity\Product;
 use App\Form\AddToCartType;
 use App\Manager\CartManager;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -32,43 +34,22 @@ class ShoppingCartController extends AbstractController
         ]);
     }
     #[Route('/cart/{id}', name: 'app_product_add', methods: ['GET'])]
-    public function addCart($id, Product $product, CartRepository $cart, Request $request): Response
+    public function addCart($id,User $fkuser, Product $product, CartRepository $cart, Request $request, ManagerRegistry $doctrine): Response
     {
-        $amount = $request->query->get('availability');
-        $stock = $product->getAvailability();
-       
-        if($stock - $amount < 0){
-            $this->addFlash('notice', 'Ordering amount is bigger than stock.');
-            return $this->redirectToRoute('app_product_index', ['id' => $id]);
+        $fkuser = $this->getUser(User::class);
+        $fkproduct = $doctrine->getRepository(Product::class)->find($id);
+        $cartitem = $doctrine->getRepository(Cart::class);
+        // dd($fkproduct);
+        $shopcart = $cartitem->findBy(array('fk_user' => $fkuser, 'fk_product' => $fkproduct));    
+        if(!$shopcart){
+            $shopcart = new Cart();
+            $shopcart->setFkUser($this->getUser());
+            $shopcart->setFkProduct($product);
+            $shopcart->setStatus("0");
+            $now = new \DateTime("now");
+            $shopcart->setDatetime($now);
+            $cart->add($shopcart, true);
         }
-        else{
-            $userid = $this->getUser();
-            $shopcart = $cart->findOneBy(array('fkUser' => $userid, 'fkProduct' => $id, 'fkOrder' => NULL));
-            
-            if($shopcart){
-                $oldamount = $cart->getAmount();
-                $newamount = $oldamount + $amount;
-                if($stock - $newamount < 0){
-                    $this->addFlash('notice', 'The new total ordering amount would be bigger than stock.');
-                    return $this->redirectToRoute('app_product_index', ['id' => $id]);
-                }
-                else{
-                    $cart->setAmount($newamount);
-                    $cart->add($shopcart);
-                }
-            }
-            else{
-                $shopcart = new Cart();
-                $shopcart->setFkUser($this->getUser());
-                $shopcart->setFkProduct($product);
-              
-                $cart->add($shopcart);
-            }
-
-            return $this->redirectToRoute('app_product_index', ['id' => $id]);
-        }
-
-
+        return $this->redirectToRoute('app_product_crud_index', ['id' => $id]);
     }
-    
 }
