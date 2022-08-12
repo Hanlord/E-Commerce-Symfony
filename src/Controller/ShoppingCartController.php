@@ -25,31 +25,26 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ShoppingCartController extends AbstractController
 {
     #[Route('/shopping/cart', name: 'app_shopping_cart')]
-    public function index(ProductRepository $productRepository): Response
+    public function index(ProductRepository $productRepository, ManagerRegistry $doctrine): Response
     {
-        
+        $fkuser = $this->getUser();
+        $cartitem = $doctrine->getRepository(Cart::class);
+        $shopcart = $cartitem->findBy(array('fk_user' => $fkuser, 'status' => "0"));
         return $this->render('shopping_cart/index.html.twig', [
-            'products' => $productRepository->findAll(),
-            
+            'products' => $shopcart,
         ]);
     }
-    #[Route('/cart/{id}', name: 'app_product_add', methods: ['GET'])]
-    public function addCart($id,User $fkuser, Product $product, CartRepository $cart, Request $request, ManagerRegistry $doctrine): Response
+    #[Route('/shopping/cart/{id}', name: 'app_product_add_cart', methods: ['GET'])]
+    public function addCart($id, CartRepository $cart, ManagerRegistry $doctrine): Response
     {
-        $fkuser = $this->getUser(User::class);
         $fkproduct = $doctrine->getRepository(Product::class)->find($id);
-        $cartitem = $doctrine->getRepository(Cart::class);
-        // dd($fkproduct);
-        $shopcart = $cartitem->findBy(array('fk_user' => $fkuser, 'fk_product' => $fkproduct));    
-        if(!$shopcart){
-            $shopcart = new Cart();
-            $shopcart->setFkUser($this->getUser());
-            $shopcart->setFkProduct($product);
-            $shopcart->setStatus("0");
-            $now = new \DateTime("now");
-            $shopcart->setDatetime($now);
-            $cart->add($shopcart, true);
-        }
-        return $this->redirectToRoute('app_product_crud_index', ['id' => $id]);
+        $shopcart = new Cart();
+        $shopcart->setFkUser($this->getUser());
+        $shopcart->setFkProduct($fkproduct);
+        $shopcart->setStatus("0");
+        $now = new \DateTime("now");
+        $shopcart->setDatetime($now);
+        $cart->add($shopcart, true);
+        return $this->redirectToRoute('app_product_crud_index');
     }
 }
