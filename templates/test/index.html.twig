@@ -1,17 +1,74 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TestController!{% endblock %}
+{% block title %}Welcome to our Store!{% endblock %}
 
 {% block body %}
 
 {% include "test/_hero.html.twig" %}
-<div class="example-wrapper">
-    <h1>Hello  ✅</h1>
+<div class="container">
+<div class="tab-content d-flex justify-content-center m-3" id="nav-tabContent">
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="width: 50rem;">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/FSWD16-team4/src/Controller/TestController.php'|file_link(0) }}">src/Controller/TestController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/FSWD16-team4/templates/test/index.html.twig'|file_link(0) }}">templates/test/index.html.twig</a></code></li>
-    </ul>
+            </div>
+            <div class="carousel-inner rounded-circle">
+                <div class="carousel-item active">
+                    <img src="https://cdn.pixabay.com/photo/2018/06/01/13/54/books-3446451__340.jpg" height="500" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item rounded-circle">
+                    <img src="https://cdn.pixabay.com/photo/2016/01/22/08/20/film-1155439__340.jpg" height="500" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item rounded-circle">
+                    <img src="https://cdn.pixabay.com/photo/2018/09/05/06/19/gamer-zone-3655575__340.png" height="500" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item rounded-circle">
+                    <img src="https://cdn.pixabay.com/photo/2017/08/04/20/10/dj-2581269__340.jpg" height="500" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+     <button id="show" type="submit" name="Submit" class="btn btn-success ms-3">
+          Free Joke
+        </button>
+        <hr>
+      <div id="content" class="row bg-muted"></div>
 </div>
+</div>
+
+ <script>
+      let btn = document.getElementById("show");
+      btn.addEventListener("click", reqXML);
+      function reqXML(e) {
+        e.preventDefault();
+        let ajax = new XMLHttpRequest();
+        ajax.open("GET", "http://api.serri.codefactory.live/random/");
+        ajax.onload = function () {
+          if (this.status == 200) {
+            const random = JSON.parse(ajax.responseText);
+
+            let content = document.getElementById("content");
+            content.innerHTML += `<div class="card mb-3 border-0">
+  <img src="https://cdn.pixabay.com/photo/2020/05/04/11/19/smile-5128742__340.jpg" class="card-img-top" alt="..." style="height:300px;width:100%;">
+  <div class="card-body">
+    <p class="card-text text-dark">"${random.joke}"</p>
+  </div>
+</div>`;
+          }
+        };
+        ajax.send();
+      }
+    </script>   
+
 {% endblock %}
