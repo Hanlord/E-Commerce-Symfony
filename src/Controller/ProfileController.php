@@ -46,14 +46,19 @@ class ProfileController extends AbstractController
                     $user->setImage($pictureFileName);
                   }
                 $user->setFkAddress($address);
+                $roles = $form->get('roles')->getData();
+                // dd($roles);
+                $user->setRoles($roles);
                 // encode the plain password
-                $user->setPassword(
-                    $userPasswordHasher->hashPassword(
-                        $user,
-                        $form->get('plainPassword')->getData()
-                    ),
-                $user->setStatus($userStatus)
-                );
+                if ($this->getUser() == false) {
+                    $user->setPassword(
+                        $userPasswordHasher->hashPassword(
+                            $user,
+                            $form->get('plainPassword')->getData()
+                        ),
+                    );
+                }
+                $user->setStatus($userStatus);
                 $entityManager->persist($address);
                 $entityManager->persist($user);
                 $entityManager->flush();

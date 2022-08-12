@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 class TestController extends AbstractController
 {
@@ -31,7 +32,32 @@ class TestController extends AbstractController
             'user' => $user,
         ]);
     }
-
+    #[Route('/admin/dashboard', name: 'app_admin_dashboard')]
+    public function dashbord(ManagerRegistry $doctrine): Response
+    {
+        $users = $doctrine->getRepository(User::class)->findAll();
+        return $this->render('test/dashboard.html.twig', [
+            'users' => $users,
+        ]);
+    }
+    #[Route('/admin/dashboard/ban/{id}', name: 'app_admin_dashboard_ban')]
+    public function dashbordBan(ManagerRegistry $doctrine, $id,  EntityManagerInterface $entityManager): Response
+    {
+        $user = $doctrine->getRepository(User::class)->find($id);
+        $user->setStatus("ban");
+        $entityManager->persist($user);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_admin_dashboard');
+    }
+    #[Route('/admin/dashboard/unban/{id}', name: 'app_admin_dashboard_unban')]
+    public function dashbordUnban(ManagerRegistry $doctrine, $id,  EntityManagerInterface $entityManager): Response
+    {
+        $user = $doctrine->getRepository(User::class)->find($id);
+        $user->setStatus("Good");
+        $entityManager->persist($user);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_admin_dashboard');
+    }
     // ***** CONTACT *****
     // INFO: Route is set intetionaly to '/temp/test/contact' for testing (it has to be fixed!)
     //        otherwise without '/temp' ther will be an error!

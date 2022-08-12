@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block body %}
+  <div class="container my-5">
+    <h1 class="text-center">dashboard</h1>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5 text-center">
+      {% for user in users %}
+        <div class="col">
+          <div class="" style="width: 18rem;">
+            <img src="{{ asset('pictures/' ~ user.image)}}">
+            <div class="card-body">
+              <h5 class="card-title">{{ user.name }}</h5>
+              <p class="card-text">{{ user.email }}</p>
+              {% if user.status == "ban" %}
+                <p class="text-warning">BAN</p>
+              {% endif %}
+              <a href="{{ path('app_profile_edit', {'id': user.id}) }}" class="btn btn-secondary">Details</a>
+              {% if user.status == "ban" %}
+                <a href="{{ path('app_admin_dashboard_unban', {'id': user.id}) }}" class="btn btn-success">unban</a>
+              {% else %}
+                <a href="{{ path('app_admin_dashboard_ban', {'id': user.id}) }}" class="btn btn-danger">ban</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <p colspan="7">no records found</p>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
