@@ -59,7 +59,7 @@
             const random = JSON.parse(ajax.responseText);
 
             let content = document.getElementById("content");
-            content.innerHTML += `<div class="card mb-3 border-0">
+            content.innerHTML = `<div class="card mb-3 border-0">
   <img src="https://cdn.pixabay.com/photo/2020/05/04/11/19/smile-5128742__340.jpg" class="card-img-top" alt="..." style="height:300px;width:100%;">
   <div class="card-body">
     <p class="card-text text-dark">"${random.joke}"</p>
