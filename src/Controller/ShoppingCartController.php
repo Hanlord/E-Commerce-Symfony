@@ -50,7 +50,7 @@ class ShoppingCartController extends AbstractController
                 $newamount = $oldamount + $amount;
                 if($stock - $newamount < 0){
                     $this->addFlash('notice', 'The new total ordering amount would be bigger than stock.');
-                    return $this->redirectToRoute('app_product_show', ['id' => $id]);
+                    return $this->redirectToRoute('app_product_index', ['id' => $id]);
                 }
                 else{
                     $cart->setAmount($newamount);
