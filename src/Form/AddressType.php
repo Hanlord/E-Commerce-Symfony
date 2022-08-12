@@ -8,9 +8,16 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Security\Core\Security;
+
 
 class AddressType extends AbstractType
 {
+    private $security;
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -30,19 +37,21 @@ class AddressType extends AbstractType
             ->add('country', TextType::class, [
                 'label_attr'=>['class'=>'form-label'],
                 'row_attr'=>['class'=>'col-md-6'],
-                'attr' => ['class' => 'form-control mb-1', 'placeholder'=>'Austria'] ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'label'=>'Agree to our Terms & Conditions',
-                'label_attr'=>['class'=>'form-check-label'],
-                'row_attr'=>['class'=>'col-12 my-3'],
-                'attr'=>['class'=>'form-check-input mx-3'],
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ])
+                'attr' => ['class' => 'form-control mb-1', 'placeholder'=>'Austria'] ]);
+            if ($this->security->getUser() == false) {
+                $builder->add('agreeTerms', CheckboxType::class, [
+                    'label'=>'Agree to our Terms & Conditions',
+                    'label_attr'=>['class'=>'form-check-label'],
+                    'row_attr'=>['class'=>'col-12 my-3'],
+                    'attr'=>['class'=>'form-check-input mx-3'],
+                    'mapped' => false,
+                    'constraints' => [
+                        new IsTrue([
+                            'message' => 'You should agree to our terms.',
+                        ]),
+                    ],
+                ]);
+            }
             
         ;
     }
