@@ -3,6 +3,9 @@
 namespace App\Controller;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
+use App\Repository\ReviewRepository;
+use App\Repository\CartRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,6 +14,8 @@ use Symfony\Component\Form\AbstractType;
 use App\Entity\Product;
 use App\Form\AddToCartType;
 use App\Manager\CartManager;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,21 +31,44 @@ class ShoppingCartController extends AbstractController
             
         ]);
     }
-    public function buildForm(FormBuilderInterface $builder)
+    #[Route('/cart/{id}', name: 'app_product_add', methods: ['GET'])]
+    public function addCart($id, Product $product, CartRepository $cart, Request $request): Response
     {
-        
-        $builder->add('quantity');
-        $builder->add('add', SubmitType::class, [
-            'label' => 'Add to cart'
-        ]);
-    }
+        $amount = $request->query->get('availability');
+        $stock = $product->getAvailability();
+       
+        if($stock - $amount < 0){
+            $this->addFlash('notice', 'Ordering amount is bigger than stock.');
+            return $this->redirectToRoute('app_product_show', ['id' => $id]);
+        }
+        else{
+            $userid = $this->getUser();
+            $shopcart = $cart->findOneBy(array('fkUser' => $userid, 'fkProduct' => $id, 'fkOrder' => NULL));
+            
+            if($shopcart){
+                $oldamount = $cart->getAmount();
+                $newamount = $oldamount + $amount;
+                if($stock - $newamount < 0){
+                    $this->addFlash('notice', 'The new total ordering amount would be bigger than stock.');
+                    return $this->redirectToRoute('app_product_show', ['id' => $id]);
+                }
+                else{
+                    $cart->setAmount($newamount);
+                    $cart->add($shopcart);
+                }
+            }
+            else{
+                $shopcart = new Cart();
+                $shopcart->setFkUser($this->getUser());
+                $shopcart->setFkProduct($product);
+              
+                $cart->add($shopcart);
+            }
 
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => OrderItem::class,
-        ]);
+            return $this->redirectToRoute('app_product_index', ['id' => $id]);
+        }
+
+
     }
-    
     
 }

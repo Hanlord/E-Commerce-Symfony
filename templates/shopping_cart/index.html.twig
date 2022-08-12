@@ -6,18 +6,24 @@
     <div class="container mt-4">
     <div class="content1 text-center"></div>
         <h1>Your Cart</h1>
-        {# {% if products.items.count > 0 %} #}
-            <div class="row mt-4">
-                <!-- List of items -->
-                <div class="col-md-8"></div>
-                <!-- Summary -->
-                <div class="col-md-4"></div>
+        {% for product in products %}
+        <div class="row border-top border-bottom">
+            <div class="row main align-items-center">
+                <div class="col-2"><img id="cartimage" class="img-fluid" src="{{asset('pictures/'~ product.fkProduct.image)}}"></div>
+                <div class="col">
+                    <div class="row text-muted">{{product.fkProduct.name}}</div>
+                    <div class="row">{{product.availability}}</div>
+                    <div class="row">{{ product.fkProduct.price * product.availability }} ({{ product.fkProduct.price }})</div>
+                </div>
+                <a class="btn" href="{{ path('app_cart_delete', {'id': item.id}) }}">delete</a>
+                <div class="col">&euro;{{ item.fkProduct.price}}  <span class="close">&#10005;</span></div>
             </div>
-        {# {% else %} #}
+        </div>
+    {% else %}
             <div class="alert alert-info">
                 Your cart is empty. Go to the <a href="{{ path('app_product_crud_index') }}">product list</a>.
             </div>
-        {# {% endif %} #}
+    {% endfor %}
     </div>
     <div class="col-md-4">
     <div class="card mt-4 mt-md-0">
@@ -25,7 +31,7 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between">
                 <div><b>Total</b></div>
-                {# <span><b>{{ cart.total }} €</b></span> #}
+                <span><b>{{ total }} €</b></span>
             </li>
         </ul>
         <div class="card-body">
