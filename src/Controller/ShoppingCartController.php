@@ -39,7 +39,7 @@ class ShoppingCartController extends AbstractController
        
         if($stock - $amount < 0){
             $this->addFlash('notice', 'Ordering amount is bigger than stock.');
-            return $this->redirectToRoute('app_product_show', ['id' => $id]);
+            return $this->redirectToRoute('app_product_index', ['id' => $id]);
         }
         else{
             $userid = $this->getUser();
