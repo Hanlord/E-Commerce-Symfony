@@ -17,7 +17,7 @@
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 	</head>
-	<body>
+	<body class="d-flex flex-column min-vh-100">
 		{% block navbar %}
 			<nav class="navbar navbar-expand-lg bg-black navbar-dark h-30">
 				<div class="container-fluid">
@@ -93,7 +93,7 @@
 		{% block body %}
 		{% endblock %}
 		{% block footer %}
-			<footer class="footer">
+			<footer class="footer mt-auto">
 				<div class="p-3 d-flex justify-content-center align-items-center social">
 					<i class='fa fa-instagram' role="button"></i>
 					<i class="fa fa-pinterest" role="button"></i>
