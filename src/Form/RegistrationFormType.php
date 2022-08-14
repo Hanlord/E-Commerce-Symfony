@@ -57,9 +57,9 @@ class RegistrationFormType extends AbstractType
             }
         $builder
             ->add('name', TextType::class, [
-                    'label_attr'=>['class'=>'form-label'],
-                    'row_attr'=>['class'=>'col-md-6'],
-                    'attr' => ['class' => 'form-control mb-1', 'placeholder'=>'first name'] ])       
+                'label_attr'=>['class'=>'form-label'],
+                'row_attr'=>['class'=>'col-md-6'],
+                'attr' => ['class' => 'form-control mb-1', 'placeholder'=>'first name'] ])       
             ->add('surname', TextType::class, [
                 'label_attr'=>['class'=>'form-label'],
                 'row_attr'=>['class'=>'col-md-6'],
@@ -84,14 +84,22 @@ class RegistrationFormType extends AbstractType
                     ])
                 ],
                 'label_attr'=>['class'=>'form-label'],
-                'row_attr'=>['class'=>'col-12'],
+                'row_attr'=>['class'=>'col-md-6'],
                 'attr' => ['class'=>'form-control mb-1']
             ]);
             if ($this->security->isGranted('ROLE_ADMIN')) {
-                $builder->add('status', TextType::class)
-                        ->add('roles', CollectionType::class , ["entry_type"=> ChoiceType::class, 'entry_options' => [
-                            'attr' => ['class' => 'email-box'],
-                            "choices"=> ["admin"=>"ROLE_ADMIN", "user"=>"ROLE_USER"]
+                $builder
+                ->add('status', TextType::class,[
+                'label_attr'=>['class'=>'form-label'],
+                'row_attr'=>['class'=>'col-md-6'],
+                'attr' => ['class'=>'form-control mb-1']])
+                ->add('roles', CollectionType::class , ['row_attr'=>['class'=>'col-12'],
+                'label_attr'=>['class'=>'form-label m-0 p-0'],
+                "entry_type"=> ChoiceType::class, 'entry_options' => [
+                    'row_attr'=>['class'=>'col-12'],
+                'label'=>' ',
+                'attr' => ['class' => 'form-select mb-1'],
+                "choices"=> ["admin"=>"ROLE_ADMIN", "user"=>"ROLE_USER"]
                         ]]);
             }
     }

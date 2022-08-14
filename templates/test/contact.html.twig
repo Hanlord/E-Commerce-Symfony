@@ -24,8 +24,8 @@
     {# TODO: Styles for google map, it has to be placed at the write place!!!  #}
     #map {
         margin: auto;
-        height: 80%;
-        width: 60%;
+        height: 50%;
+        width: 50%;
     }
     html, body {
         height: 100%;
@@ -34,13 +34,13 @@
     }
 </style>
 
-<h3> CONTACT US</h3>
-
+<h3 class="text-center mt-5"> Contact us</h3>
+<div class="container" style="width:30%">
 {{ form_start(contactform) }}
-    {{ form_widget(contactform) }}
+    {{ form_widget(contactform,{'attr': {'class': 'row g-3 mb-3'}}) }}
     {# <button class="btn">{{ button_label|default('Save') }}</button> #}
 {{ form_end(contactform) }}
-
+</div>
 {% if data.sent %}
     <div class="container" >
         <hr><p>Thank you {{ data.name }} for contacting us, Your message has been sent successfully!</p><br>
@@ -51,10 +51,18 @@
         <p>Content: {{data.message }}</p>
     </div>
 {% endif %}
-
-    <hr>
     <h2 class="text-center">How to find us:</h2>
-    <div id="map"></div>
+    <div id="map" class="my-5"></div>
+    <div class="text-center d-flex align-items-center justify-content-center hours">
+    <ul class="px-5 list-style2" style="font-size: 25px">
+      <li style="text-decoration: underline">Location:</li>
+      <li>Kettenbrückengasse 23, 1040 Wien</li>
+      <li class="mt-2" style="text-decoration: underline">Office hours:</li>
+      <li>Monday 08:00 - 18:00</li>   
+      <li>Wednesday 08:00 - 18:00</li>
+      <li>Thursday 08:00 - 18:00</li>
+    </ul>
+  </div>
         <script>
             var map;
             function initMap() {

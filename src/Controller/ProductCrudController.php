@@ -52,10 +52,12 @@ class ProductCrudController extends AbstractController
     }
 
     #[Route('/product/crud/{id}', name: 'app_product_crud_show', methods: ['GET'])]
-    public function show(Product $product): Response
+    public function show(Product $product,ProductRepository $productRepository,$id): Response
     {
+        $discount = $product->getFkDiscount();
         return $this->render('product_crud/show.html.twig', [
             'product' => $product,
+            'discount'=>$discount,
         ]);
     }
 
@@ -90,5 +92,19 @@ class ProductCrudController extends AbstractController
         }
 
         return $this->redirectToRoute('app_product_crud_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/product/crud/category/{filter}', name: 'app_product_crud_filter')]
+    public function filter(ManagerRegistry $doctrine, $filter): Response
+    {
+        if($filter=="all"){
+        $category = $doctrine->getRepository(Product::class)->findAll();
+        }
+        else {
+        $category = $doctrine->getRepository(Product::class)->findBy(['fk_category' => $filter]);
+        }
+        return $this->render('product_crud/index.html.twig', [
+            'products' => $category
+        ]);
     }
 }

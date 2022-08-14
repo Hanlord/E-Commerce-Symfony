@@ -73,10 +73,22 @@ class TestController extends AbstractController
 
         $defaultData = ['message' => 'Type your message here'];
         $form = $this->createFormBuilder($defaultData)
-            ->add('name', TextType::class)
-            ->add('email', EmailType::class)
-            ->add('message', TextareaType::class)
-            ->add('send', SubmitType::class)
+            ->add('name', TextType::class, [
+            'label_attr'=>['class'=>'form-label'],
+            'row_attr'=>['class'=>'col-12'],
+            'attr' => ['class' => 'form-control mb-1', 'placeholder'=>'your name'] ])
+            ->add('email', EmailType::class, [
+                'label_attr'=>['class'=>'form-label'],
+                'row_attr'=>['class'=>'col-12'],
+                'attr' => ['class' => 'form-control mb-1', 'placeholder'=>'username@email.com']])
+            ->add('message', TextareaType::class,[
+            'label_attr'=>['class'=>'form-label'],
+            'row_attr'=>['class'=>'col-12'],
+            'attr' => ['class' => 'form-control mb-1'] ])
+            ->add('send', SubmitType::class,[
+            'row_attr'=>['class'=>'col-12 text-center mb-3'],
+            'attr' => ['class' => 'btn btn-primary']
+            ])
             ->getForm();
         $form->handleRequest($request);
 

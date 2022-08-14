@@ -9,7 +9,7 @@
       {% for user in users %}
         <div class="col">
           <div class="" style="width: 18rem;">
-            <img src="{{ asset('pictures/' ~ user.image)}}">
+            <img src="{{ asset('pictures/' ~ user.image)}}" style="height:10rem;width:10rem;border-radius:50%;">
             <div class="card-body">
               <h5 class="card-title">{{ user.name }}</h5>
               <p class="card-text">{{ user.email }}</p>
