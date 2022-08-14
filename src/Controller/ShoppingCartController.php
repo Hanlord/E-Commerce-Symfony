@@ -66,6 +66,7 @@ class ShoppingCartController extends AbstractController
             $cartRep->add($item, true);
         }
         $orderRep->add($order, true);
+        
         return $this->redirectToRoute('app_product_crud_index');
     }
     #[Route('/shopping/cart/price', name: 'app_cart_price', methods: ['GET'])]

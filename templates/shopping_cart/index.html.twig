@@ -21,13 +21,14 @@
             </div>
         {% endfor %}
     </div>
-    {% for product in products %}
+    
     <div class="col-md-4">
         <div class="card mt-4 mt-md-0">
             <h5 class="card-header bg-dark text-white">Summary</h5>
+            {% for product in products %}
             <div class="row text-muted">{{product.fkProduct.name}}</div>
            <div class="col text-end"><span>&euro;{{ product.fkProduct.price}}<span><a class="btn btn-danger" href="{{ path('app_product_delete_cart', {'id': product.id}) }}">delete</a></div>
-           
+           {% endfor %}
            {# {{ product.fkDiscount.amount}} #}
             <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex justify-content-between">
@@ -40,5 +41,5 @@
             </div>
         </div>
     </div> 
-    {% endfor %}
+    
 {% endblock %}
