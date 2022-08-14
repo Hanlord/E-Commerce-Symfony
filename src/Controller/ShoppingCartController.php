@@ -5,6 +5,7 @@ use App\Entity\Cart;
 use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\Shipment;
+use App\Entity\Discount;
 use App\Entity\User;
 use App\Repository\ProductRepository;
 use App\Repository\CartRepository;
@@ -66,5 +67,24 @@ class ShoppingCartController extends AbstractController
         }
         $orderRep->add($order, true);
         return $this->redirectToRoute('app_product_crud_index');
+    }
+    #[Route('/shopping/cart/price', name: 'app_cart_price', methods: ['GET'])]
+    public function total(CartRepository $cart, Discount $discount): Response
+    {
+        $userid = $this->getUser();
+        $products = $cart->findBy(['fkUser' => $userid, 'fkOrder' => NULL]);
+        $total = 0;
+        foreach($products as $val){
+            $price = $val->getFkProduct()->getPrice();
+            $discount = $val->getFkProduct()->getFkDiscount();
+            $total += $price * ((100-$discount)/100);
+        }
+
+        return $this->render('app_shopping_cart', [
+            'products' => $products,
+            'total' => $total,
+        ]);
+
+
     }
 }
