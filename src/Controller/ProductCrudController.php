@@ -111,7 +111,7 @@ class ProductCrudController extends AbstractController
     public function search(ManagerRegistry $doctrine, Request $request): Response
     {
         $search = $request->query->get('search');
-        $result = $doctrine->getRepository(Product::class)->findBy(array('name' => $search, 'hidden' => 0));
+        $result = $doctrine->getRepository(Product::class)->findBy(array('name' => $search));
         
         if($result){
             return $this->render('product_crud/index.html.twig', ['products' => $result]);
