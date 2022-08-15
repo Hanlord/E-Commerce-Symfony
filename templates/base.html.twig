@@ -125,8 +125,10 @@
 							{% endif %}
 						</ul>
 						<div class="d-flex" role="search">
+						<input type="text" name="search" id="search" placeholder="Search..">
 							{# <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
 							<button class="btn btn-outline-success" type="submit">Search</button> #}
+							<div id="result"></div>
 							<a class=" ms-3" type="submit" href="{{ path('app_shopping_cart') }}"><i class="bi bi-cart3 text-white btn btn-outline-light"></i></a>
 						</div>
 					</div>
@@ -181,5 +183,23 @@
           el: ".swiper-pagination",
         },
       });
+
+//searchbar
+	  document.getElementById("search").addEventListener("input",searchForInfo);
+
+            function searchForInfo(e) {
+                e.preventDefault();
+                let data = document.getElementById("search").value;
+                // let params = `search=${data}`;
+                let request = new XMLHttpRequest();
+                request.open("GET", "search.php?search="+data);
+                // request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                request.onload = function (){
+                    if (this.status == 200){
+                        document.getElementById("result").innerHTML= this.responseText;
+                    }
+                };
+                request.send();
+			}
     </script>
 </body></html>
