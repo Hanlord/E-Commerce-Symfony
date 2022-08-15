@@ -107,4 +107,17 @@ class ProductCrudController extends AbstractController
             'products' => $category
         ]);
     }
+    #[Route('/search/', name: 'app_search')]
+    public function search(ManagerRegistry $doctrine, Request $request): Response
+    {
+        $search = $request->query->get('search');
+        $result = $doctrine->getRepository(Product::class)->findBy(array('name' => $search, 'hidden' => 0));
+        
+        if($result){
+            return $this->render('product_crud/index.html.twig', ['products' => $result]);
+        }else{
+            $this->addFlash('notice', 'not found.');
+            return $this->redirectToRoute('app_product_crud_index');
+        }
+    }
 }
