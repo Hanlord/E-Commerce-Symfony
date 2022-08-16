@@ -25,8 +25,15 @@ class ShoppingCartController extends AbstractController
         $fkuser = $this->getUser();
         $cartitem = $doctrine->getRepository(Cart::class);
         $shopcart = $cartitem->findBy(array('fk_user' => $fkuser, 'status' => "0"));
+        $total = 0;
+        foreach($shopcart as $val){
+            $price = $val->getFkProduct()->getPrice();
+            $discount = $val->getFkProduct()->getFkDiscount()->getAmount();
+            $total += $price - ($price * ($discount/100));
+        }   
         return $this->render('shopping_cart/index.html.twig', [
             'products' => $shopcart,
+            'total' => $total,
         ]);
     }
     #[Route('/shopping/cart/{id}', name: 'app_product_add_cart', methods: ['GET'])]

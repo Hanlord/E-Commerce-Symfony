@@ -34,7 +34,7 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex justify-content-between">
                     <div><b>Total</b></div>
-                {# <span><b>{{ product.total }} €</b></span> #}
+                <span><b>{{ total }} €</b></span>
                 </li>
             </ul>
             <div id="paypal-button-container"></div>
@@ -55,7 +55,7 @@
           return actions.order.create({
             purchase_units: [{
               amount: {
-                value: '77.44' // Can also reference a variable or function
+                value: '{{ total }}' // Can also reference a variable or function
               }
             }]
           });
