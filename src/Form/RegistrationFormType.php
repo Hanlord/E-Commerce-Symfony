@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -93,6 +94,10 @@ class RegistrationFormType extends AbstractType
                 'label_attr'=>['class'=>'form-label'],
                 'row_attr'=>['class'=>'col-md-6'],
                 'attr' => ['class'=>'form-control mb-1']])
+                ->add('datetime', DateTimeType::class, [
+                    'row_attr' => ['class' => 'col-md-6'],
+                    'attr' => ['class'=>'form-control mb-1']
+                ])
                 ->add('roles', CollectionType::class , ['row_attr'=>['class'=>'col-12'],
                 'label_attr'=>['class'=>'form-label m-0 p-0'],
                 "entry_type"=> ChoiceType::class, 'entry_options' => [
