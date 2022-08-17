@@ -86,7 +86,7 @@ class ProductCrudController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
                 $formdata = $form->getData();
                 $fkuser = $this->getUser();
-                $usertest = $doctrine->getRepository(Review::Class)->findBy(['fk_user' => $fkuser, 'fk_product' => $fkproduct]);
+                $usertest = $doctrine->getRepository(Review::class)->findBy(['fk_user' => $fkuser, 'fk_product' => $fkproduct]);
                 if (sizeof($usertest) > 0) {
                     $review = $usertest[0];
                 } else {
