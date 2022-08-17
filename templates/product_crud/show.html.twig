@@ -37,9 +37,9 @@
                 <div class="" style="width: 18rem;">
                     <div class="card-body mt-3">
                         <h5 class="card-title">{{ review.title }}</h5>
-                        <p class="card-text">{{ review.rating }}</p>
-                        <p class="card-text">{{ review.message }}</p>
-                        <p class="card-text">{{ review.fkUser.name }}</p>
+                        <p class="card-text">{{ review.rating }} 💛</p>
+                        <p class="card-text">comment: {{ review.message }}</p>
+                        <p class="card-text">from: {{ review.fkUser.name }}</p>
                         {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ path('app_product_delete_review', {'id': review.id}) }}"  class="btn edit-btn">Delete</a>
                         {% endif %}
