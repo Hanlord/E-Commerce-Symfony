@@ -88,7 +88,7 @@
 {% for product in products %}
 <div class="col">
    <div class="" style="width: 18rem;">
-   <a href="{{ path('app_product_crud_show', {'id': product.id}) }}"><img src="{{ asset('pictures/datapics/' ~ product.image)}}" style="border-radius:3%; height:10rem; width:15rem;"></a>
+   <a href="{{ path('app_product_crud_show', {'id': product.id}) }}"><img src="{{ asset('pictures/' ~ product.image)}}" style="border-radius:3%; height:10rem; width:15rem;"></a>
   <div class="card-body mt-3">
     <h5 class="card-title">{{ product.name }}</h5>
     <p class="card-text">{{ product.price }} €</p>
