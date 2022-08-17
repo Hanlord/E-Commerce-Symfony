@@ -1,8 +1,5 @@
-<div class="container my-5">
-<div class="row g-3">
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+    {{ form_widget(form, {'attr': {'class': 'row g-3'}}) }}
+    <button class="btn edit-btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
-</div>
-</div>
+

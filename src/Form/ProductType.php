@@ -21,13 +21,21 @@ class ProductType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'attr' => ['class' => 'form-control mb-1',  'style' => 'width:30%'] ])
+                'label_attr'=>['class'=>'form-label'],
+                'row_attr'=>['class'=>'col-md-12'],
+                'attr' => ['class' => 'form-control mb-1'] ])
             ->add('description', TextareaType::class, [
-                'attr' => ['class' => 'form-control mb-1',  'style' => 'width:30%'] ])
+                'row_attr'=>['class'=>'col-md-12'],
+                'label_attr'=>['class'=>'form-label'],
+                'attr' => ['class' => 'form-control mb-1'] ])
             ->add('price', IntegerType::class, [
-                'attr' => ['class' => 'form-control mb-1',  'style' => 'width:30%'] ])
+                'label_attr'=>['class'=>'form-label'],
+                'row_attr'=>['class'=>'col-md-6'],
+                'attr' => ['class' => 'form-control mb-1'] ])
 
             ->add('image', FileType::class, [
+                'label_attr'=>['class'=>'form-label'],
+                'row_attr'=>['class'=>'col-md-6'],
                 'label' => 'Upload Picture',
      
                 'mapped' => false,
@@ -46,23 +54,29 @@ class ProductType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid image file',
                     ])
                 ],
-                'attr' => ['class'=>'form-control mb-1', 'style' => 'width:30%']
+                'attr' => ['class'=>'form-control mb-1']
             ])
 
             ->add('availability', ChoiceType::class, [
+                'label_attr'=>['class'=>'form-label'],
+                'row_attr'=>['class'=>'col-md-6'],
                 'choices' => ['available' => '1', 'not available' => '0'],
-                'attr' => ['class' => 'form-select mb-1',  'style' => 'width:30%'] ])
+                'attr' => ['class' => 'form-select mb-1'] ])
             ->add('fk_category', EntityType::class, [
+                'label_attr'=>['class'=>'form-label'],
+                'row_attr'=>['class'=>'col-md-6'],
                 'class' => Category::class,
                 'choice_label' => 'name',
                 'label'=>'Category',
-                'attr' => ['class' => 'form-select mb-1',  'style' => 'width:30%']
+                'attr' => ['class' => 'form-select mb-1']
             ])
             ->add('fk_discount', EntityType::class, [
+                'label_attr'=>['class'=>'form-label'],
+                'row_attr'=>['class'=>'col-md-6'],
                 'class' => Discount::class,
                 'choice_label' => 'name',
                 'label'=>'Discount',
-                'attr' => ['class' => 'form-select mb-1',  'style' => 'width:30%']
+                'attr' => ['class' => 'form-select mb-3']
             ])  
         ;
     }

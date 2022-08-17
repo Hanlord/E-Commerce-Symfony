@@ -77,7 +77,7 @@
 
 {% block body %}
      <div class="container my-5">
-    <h1 class="text-center my-5">Catalog</h1>
+    <h1 class="text-center my-3">Catalog</h1>
 	<div id="result"></div>
     {% if is_granted('ROLE_ADMIN') %}
        <a href="{{ path('app_product_crud_new') }}" class="btn create-btn">Create new</a>
@@ -92,9 +92,9 @@
   <div class="card-body mt-3">
     <h5 class="card-title">{{ product.name }}</h5>
     <p class="card-text">{{ product.price }} €</p>
-    <a href="{{ path('app_product_crud_show', {'id': product.id}) }}" class="btn btn-secondary">Details</a>
+    <a href="{{ path('app_product_crud_show', {'id': product.id}) }}" class="btn details-btn">Details</a>
         {% if is_granted('ROLE_USER') %} 
-    <a href="{{ path('app_product_add_cart', {'id': product.id}) }}" class="btn btn-primary">Buy</a>
+    <a href="{{ path('app_product_add_cart', {'id': product.id}) }}" class="btn submit-btn">Buy</a>
     {% endif %}
     {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ path('app_product_crud_edit', {'id': product.id}) }}"  class="btn edit-btn">Edit</a>
