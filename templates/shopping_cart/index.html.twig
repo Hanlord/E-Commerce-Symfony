@@ -3,10 +3,13 @@
 {% block title %}Cart{% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
-    <div class="content1 text-center"></div>
+    <div class="container my-4 ">
+    
+    <div class="content1 text-center row justify-content-between">
         <h1>Your Cart</h1>
+         <div class="col-md-8">
         {% for product in products %}
+        
             <div class="row border-top border-bottom">
                 <div class="row main align-items-center">
                     <div class="col-2"><img id="cartimage" class="img-fluid" src="{{asset('pictures/'~ product.fkProduct.image)}}"></div>
@@ -18,10 +21,11 @@
                     
                     <div class="col">&euro;{{ product.fkProduct.price}}</div>
                 </div>
-            </div>
+            
+                </div>
         {% endfor %}
+
     </div>
-    
     <div class="col-md-4">
         <div class="card mt-4 mt-md-0">
             <h5 class="card-header bg-dark text-white text-center">Summary</h5>
@@ -41,6 +45,8 @@
     <a href="{{ path('app_payment_error') }}"><button  hidden id="btn-error"></button></a>
         </div>
     </div> 
+    </div>
+    </div>
     <!-- Replace "test" with your own sandbox Business account app client ID -->
     <script src="https://www.paypal.com/sdk/js?client-id=AaKebjdILb39f90hSBn2CFIn9tXzp9REEnw3vnn97S2x9_SL_qEODBb-YlErh9OcnXS9Ug15p3B58ItM"></script>
     <!-- Set up a container element for the button -->
