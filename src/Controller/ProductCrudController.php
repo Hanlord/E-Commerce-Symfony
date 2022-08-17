@@ -77,8 +77,8 @@ class ProductCrudController extends AbstractController
                 'row_attr'=>['class'=>'col-12'],
                 'attr' => ['class' => 'form-control mb-1'] ])
             ->add('send', SubmitType::class,[
-                'row_attr'=>['class'=>'col-12 text-center mb-3'],
-                'attr' => ['class' => 'btn btn-primary']
+                'row_attr'=>['class'=>'col-12 text-center mb-1'],
+                'attr' => ['class' => 'btn submit-btn']
             ])
             ->getForm();
         $form->handleRequest($request);
