@@ -3,14 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Entity\Review;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
+use App\Repository\ReviewRepository;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\FileUploader;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 
 // #[Route('/product/crud')]
 class ProductCrudController extends AbstractController
@@ -51,11 +58,54 @@ class ProductCrudController extends AbstractController
         ]);
     }
 
-    #[Route('/product/crud/{id}', name: 'app_product_crud_show', methods: ['GET'])]
-    public function show(Product $product,ProductRepository $productRepository,$id): Response
+    #[Route('/product/crud/{id}', name: 'app_product_crud_show', methods: ['GET', 'POST'])]
+    public function show(Product $product,ProductRepository $productRepository, $id, Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
     {
+        $defaultData = ['message' => 'Type your review here'];
+        $form = $this->createFormBuilder($defaultData)
+            ->add('title', TextType::class, [
+                'label_attr'=>['class'=>'form-label'],
+                'row_attr'=>['class'=>'col-12'],
+                'attr' => ['class' => 'form-control mb-1', 'placeholder'=>'Title'] ])
+            ->add('rating', ChoiceType::class, [
+                'choices' => ['1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5'],
+                'label_attr'=>['class'=>'form-label'],
+                'row_attr'=>['class'=>'col-12'],
+                'attr' => ['class' => 'form-control mb-1']])
+            ->add('message', TextareaType::class,[
+                'label_attr'=>['class'=>'form-label'],
+                'row_attr'=>['class'=>'col-12'],
+                'attr' => ['class' => 'form-control mb-1'] ])
+            ->add('send', SubmitType::class,[
+                'row_attr'=>['class'=>'col-12 text-center mb-3'],
+                'attr' => ['class' => 'btn btn-primary']
+            ])
+            ->getForm();
+        $form->handleRequest($request);
+        $fkproduct = $doctrine->getRepository(Product::class)->find($id);
+        if ($form->isSubmitted() && $form->isValid()) {
+                $formdata = $form->getData();
+                $fkuser = $this->getUser();
+                $usertest = $doctrine->getRepository(Review::Class)->findBy(['fk_user' => $fkuser, 'fk_product' => $fkproduct]);
+                if (sizeof($usertest) > 0) {
+                    $review = $usertest[0];
+                } else {
+                    $review = new Review();
+                    $review->setFkUser($fkuser);
+                    $review->setFkProduct($fkproduct);
+                }
+                $review->setTitle($formdata["title"]);
+                $review->setRating($formdata["rating"]);
+                $review->setMessage($formdata["message"]);
+                $entityManager->persist($review);
+                $entityManager->flush();
+            }
+        $reviews = $doctrine->getRepository(Review::class)->findBy(['fk_product' => $fkproduct]);;
+        // dd($reviews);
         $discount = $product->getFkDiscount();
         return $this->render('product_crud/show.html.twig', [
+            'reviewform' => $form->createView(),
+            'reviews' => $reviews,
             'product' => $product,
             'discount'=>$discount,
         ]);
@@ -119,5 +169,12 @@ class ProductCrudController extends AbstractController
             $this->addFlash('notice', 'not found.');
             return $this->redirectToRoute('app_product_crud_index');
         }
+    }
+    #[Route('/product/crud/review/delete/{id}', name: 'app_product_delete_review')]
+    public function deleteCart($id, ReviewRepository $review, ManagerRegistry $doctrine): Response
+    {
+        $reviewitem = $doctrine->getRepository(review::class)->find($id);
+        $review->remove($reviewitem, true);
+        return $this->redirectToRoute('app_product_crud_show', ['id' => $id]);
     }
 }
