@@ -1,105 +1,159 @@
-@import "bootstrap";
-$submit: rgb(34, 87, 122);
-$submitHover: rgb(34, 87, 122);
-$create:rgb(64, 145, 108);
-$createHover:rgb(45, 106, 79);
-$edit:rgb(255, 218, 61);
-$editHover:rgb(253, 196, 63);
-$textlight:rgb(199, 249, 204);
-$textdark:rgb(8, 28, 21);
-body {
-    background-color: rgb(248, 237, 235);
-}
-
-.submit-btn {
-    text-decoration: none;
-    padding: 5px 5px;
-    background: $submit;
-    margin: 10px auto;
-    color: #fff;
-    max-width: 150px;
-    transition: all 0.2s linear;
-    text-align: center;
-}
-
-.submit-btn:hover {
-    background: $submitHover;
-    color: #fff;
-}
-
-.create-btn {
-    text-decoration: none;
-    padding: 5px 5px;
-    background: $create;
-    margin: 10px auto;
-    color: #fff;
-    max-width: 150px;
-    transition: all 0.2s linear;
-    text-align: center;
-}
-
-.create-btn:hover {
-    background: $createHover;
-    color: #fff;
-}
-
-.edit-btn {
-    text-decoration: none;
-    padding: 5px 5px;
-    background: $edit;
-    margin: 10px auto;
-    color: $textdark;
-    min-width: 50px;
-    max-width: 150px;
-    transition: all 0.2s linear;
-    text-align: center;
-}
-
-.edit-btn:hover {
-    background: $editHover;
-    color: $textdark;
-}
-
-.copyright {
-    margin-bottom: 0;
-    padding-bottom: 10px;
-}
-
-.footer {
-    background-color: black;
-    color: white;
-}
-
-i {
-    font-size: 30px
-}
-
-.social {
-    gap: 3rem
-}
-
-@media screen and (max-width: 480px) {
-    .social {
-        gap: 10px
-    }
-}
-
-.hero-text {
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    // background-color: #b2b2b200;
-    // background-color: rgba(0, 0, 0, .3);
-}
-
-li {
-    list-style: none;
-}
-
-.hours {
-    width: 100%;
-    overflow: hidden
-}
+        @import "bootstrap";
+        $submit: rgb(34, 87, 122);
+        $submitHover: rgb(34, 87, 122);
+        $create:rgb(64, 145, 108);
+        $createHover:rgb(45, 106, 79);
+        $edit:rgb(255, 218, 61);
+        $editHover:rgb(253, 196, 63);
+        $textlight:rgb(199, 249, 204);
+        $textdark:rgb(8, 28, 21);
+        $details: rgb(108, 117, 125);
+        $detailsHover: rgb(52, 58, 64);
+        $delete: rgb(199, 31, 55);
+        $deleteHover: rgb(110, 20, 35);
+        body {
+            // background-color: rgb(248, 237, 235);
+        }
+        
+        .submit-btn {
+            text-decoration: none;
+            padding: 5px 5px;
+            background: $submit;
+            margin: 10px auto;
+            color: #fff;
+            max-width: 150px;
+            transition: all 0.2s linear;
+            text-align: center;
+        }
+        
+        .submit-btn:hover {
+            background: $submitHover;
+            color: #fff;
+        }
+        
+        .create-btn {
+            text-decoration: none;
+            padding: 5px 5px;
+            background: $create;
+            margin: 10px auto;
+            color: #fff;
+            max-width: 150px;
+            transition: all 0.2s linear;
+            text-align: center;
+        }
+        
+        .create-btn:hover {
+            background: $createHover;
+            color: #fff;
+        }
+        
+        .edit-btn {
+            text-decoration: none;
+            padding: 5px 5px;
+            background: $edit;
+            margin: 10px auto;
+            color: $textdark;
+            min-width: 50px;
+            max-width: 150px;
+            transition: all 0.2s linear;
+            text-align: center;
+        }
+        
+        .edit-btn:hover {
+            background: $editHover;
+            color: $textdark;
+        }
+        
+        .details-btn {
+            text-decoration: none;
+            padding: 5px 5px;
+            background: $details;
+            margin: 10px auto;
+            color: #fff;
+            max-width: 150px;
+            transition: all 0.2s linear;
+            text-align: center;
+        }
+        
+        .details-btn:hover {
+            background: $detailsHover;
+            color: #fff;
+        }
+        
+        .delete-btn {
+            text-decoration: none;
+            padding: 5px 5px;
+            background: $delete;
+            margin: 10px auto;
+            color: #fff;
+            max-width: 150px;
+            transition: all 0.2s linear;
+            text-align: center;
+        }
+        
+        .delete-btn:hover {
+            background: $deleteHover;
+            color: #fff;
+        }
+        
+        .copyright {
+            margin-bottom: 0;
+            padding-bottom: 10px;
+        }
+        
+        .footer {
+            background-color: black;
+            color: white;
+        }
+        
+        i {
+            font-size: 30px
+        }
+        
+        .social {
+            gap: 3rem
+        }
+        
+        @media screen and (max-width: 480px) {
+            .social {
+                gap: 10px
+            }
+        }
+        
+        .hero-text {
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            // background-color: #b2b2b200;
+            // background-color: rgba(0, 0, 0, .3);
+        }
+        
+        li {
+            list-style: none;
+        }
+        
+        .hours {
+            width: 100%;
+            overflow: hidden
+        }
+        
+        .fixed {
+            position: fixed;
+            width: 100vw;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -10;
+        }
+        
+        .background {
+            position: absolute;
+            display: block;
+            top: 0;
+            left: 0;
+            z-index: -10;
+            opacity: 0.3;
+        }

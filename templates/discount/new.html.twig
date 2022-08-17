@@ -3,9 +3,12 @@
 {% block title %}New Discount{% endblock %}
 
 {% block body %}
-    <h1>Create new Discount</h1>
-
+<div class="container  my-5" style="min-height:68vh">
+    <h1 class="my-5">Create new Discount</h1>
+  <div class="form" style="width:30%">
     {{ include('discount/_form.html.twig') }}
 
-    <a href="{{ path('app_discount_index') }}">back to list</a>
+    <a href="{{ path('app_discount_index') }}" class="fs-4">back to list</a>
+    </div>
+    </div>
 {% endblock %}

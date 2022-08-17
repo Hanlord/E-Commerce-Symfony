@@ -3,9 +3,10 @@
 {% block title %}Discount{% endblock %}
 
 {% block body %}
-    <h1>Discount</h1>
+<div class="container my-5" style="min-height:68vh">
+    <h1 class="my-5">Discount</h1>
 
-    <table class="table">
+    <table class="table w-50">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -26,9 +27,11 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_discount_index') }}">back to list</a>
 
-    <a href="{{ path('app_discount_edit', {'id': discount.id}) }}">edit</a>
+
+    <a href="{{ path('app_discount_edit', {'id': discount.id}) }}" class="btn edit-btn">Edit</a>
 
     {{ include('discount/_delete_form.html.twig') }}
+    <a href="{{ path('app_discount_index') }}" class="fs-4">back to list</a>
+    </div>
 {% endblock %}

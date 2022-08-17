@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Discount index{% endblock %}
+{% block title %}Discount{% endblock %}
 
 {% block body %}
-    <h1>Discount index</h1>
-
+<div class="container my-5">
+    <h1 class="my-5">Discount</h1>
+  <a href="{{ path('app_discount_new') }}" class="btn create-btn">Create new</a>
     <table class="table">
         <thead>
             <tr>
@@ -12,7 +13,7 @@
                 <th>Name</th>
                 <th>DiscountType</th>
                 <th>Amount</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -23,8 +24,9 @@
                 <td>{{ discount.discountType }}</td>
                 <td>{{ discount.amount }}</td>
                 <td>
-                    <a href="{{ path('app_discount_show', {'id': discount.id}) }}">show</a>
-                    <a href="{{ path('app_discount_edit', {'id': discount.id}) }}">edit</a>
+                    <a href="{{ path('app_discount_show', {'id': discount.id}) }}" class="btn details-btn">Details</a>
+                    <a href="{{ path('app_discount_edit', {'id': discount.id}) }}" class="btn edit-btn">Edit</a>
+                     {{ include('discount/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
@@ -35,5 +37,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_discount_new') }}">Create new</a>
+  
+       </div>
 {% endblock %}

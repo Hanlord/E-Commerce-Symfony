@@ -1,17 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category index{% endblock %}
+{% block title %}Category{% endblock %}
 
 {% block body %}
-    <h1>Category index</h1>
-
+<div class="container my-5">
+    <h1 class="my-5">Categories</h1>
+    <a href="{{ path('app_category_new') }}" class="btn create-btn">Create new</a>
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -21,8 +22,9 @@
                 <td>{{ category.name }}</td>
                 <td>{{ category.description }}</td>
                 <td>
-                    <a href="{{ path('app_category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('app_category_edit', {'id': category.id}) }}">edit</a>
+                    <a href="{{ path('app_category_show', {'id': category.id}) }}" class="btn details-btn" >Details</a>
+                    <a href="{{ path('app_category_edit', {'id': category.id}) }}" class="btn edit-btn">Edit</a>
+                    {{ include('category/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
@@ -33,5 +35,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_category_new') }}">Create new</a>
+
+    </div>
 {% endblock %}
