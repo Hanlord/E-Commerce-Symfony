@@ -175,6 +175,6 @@ class ProductCrudController extends AbstractController
     {
         $reviewitem = $doctrine->getRepository(review::class)->find($id);
         $review->remove($reviewitem, true);
-        return $this->redirectToRoute('app_product_crud_show', ['id' => $id]);
+        return $this->redirectToRoute('app_product_crud_show', ['id' => $reviewitem->getFkProduct()->getId()]);
     }
 }
