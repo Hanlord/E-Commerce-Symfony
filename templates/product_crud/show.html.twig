@@ -17,19 +17,15 @@
     <p class="card-text">{{ discount.name }} save {{ discount.amount }}% </p>
     {% if product.availability == 1 %}
     <p class="card-text">Availability: available </p>
-     {% if is_granted('ROLE_USER') %} 
-    <a href="{{ path('app_product_add_cart', {'id': product.id}) }}" class="btn btn-primary">Add to cart</a>
-    {% endif %}
     {% else %}
          <p class="card-text">Availability: not available </p>
-          {% if is_granted('ROLE_USER') %} 
-    <p  class="text-danger">This product is currently unavailable</p>
     {% endif %}
+    {% if is_granted('ROLE_USER') %} 
+                    <a href="{{ path('app_product_add_cart', {'id': product.id}) }}" class="btn btn-primary">Add to cart</a>
+    {% if is_granted('ROLE_USER') %} 
+    <a href="{{ path('app_product_add_cart', {'id': product.id}) }}" class="btn btn-primary">Add to cart</a>
     {% endif %}
-   
 </div>
-</div>
-Reviews
 </div>
     {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ path('app_product_crud_index') }}">back to list</a>

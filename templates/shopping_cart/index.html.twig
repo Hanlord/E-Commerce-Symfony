@@ -24,20 +24,21 @@
             
                 </div>
         {% endfor %}
-
     </div>
+    
     <div class="col-md-4">
         <div class="card mt-4 mt-md-0">
             <h5 class="card-header bg-dark text-white text-center">Summary</h5>
             {% for product in products %}
-            <div class="row text-muted">{{product.fkProduct.name}}</div>
-           <div class="col text-end"><span>&euro;{{ product.fkProduct.price}}<span><a class="btn btn-danger" href="{{ path('app_product_delete_cart', {'id': product.id}) }}">delete</a></div>
+            <div class="row"></div>
+            <div><span>{{ product.fkProduct.name}}<span></div>
+           <div class="col text-end"><span>&euro;{{ product.fkProduct.price}}<span><a class="btn btn-secondary" href="{{ path('app_product_delete_cart', {'id': product.id}) }}">x</a></div>
            {% endfor %}
            {# {{ product.fkDiscount.amount}} #}
             <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex justify-content-between">
                     <div><b>Total</b></div>
-                {# <span><b>{{ product.total }} €</b></span> #}
+                <span><b>{{ total }} €</b></span>
                 </li>
             </ul>
             <div id="paypal-button-container"></div>
@@ -45,8 +46,6 @@
     <a href="{{ path('app_payment_error') }}"><button  hidden id="btn-error"></button></a>
         </div>
     </div> 
-    </div>
-    </div>
     <!-- Replace "test" with your own sandbox Business account app client ID -->
     <script src="https://www.paypal.com/sdk/js?client-id=AaKebjdILb39f90hSBn2CFIn9tXzp9REEnw3vnn97S2x9_SL_qEODBb-YlErh9OcnXS9Ug15p3B58ItM"></script>
     <!-- Set up a container element for the button -->
@@ -59,7 +58,7 @@
           return actions.order.create({
             purchase_units: [{
               amount: {
-                value: '77.44' // Can also reference a variable or function
+                value: '{{ total }}' // Can also reference a variable or function
               }
             }]
           });
