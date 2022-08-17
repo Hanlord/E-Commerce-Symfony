@@ -96,7 +96,6 @@ class RegistrationFormType extends AbstractType
                 ->add('roles', CollectionType::class , ['row_attr'=>['class'=>'col-12'],
                 'label_attr'=>['class'=>'form-label m-0 p-0'],
                 "entry_type"=> ChoiceType::class, 'entry_options' => [
-                    'row_attr'=>['class'=>'col-12'],
                 'label'=>' ',
                 'attr' => ['class' => 'form-select mb-1'],
                 "choices"=> ["admin"=>"ROLE_ADMIN", "user"=>"ROLE_USER"]

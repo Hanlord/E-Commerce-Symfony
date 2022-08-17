@@ -8,12 +8,12 @@
     <h1 class="text-center">Details</h1>
 <div class="text-center d-flex justify-content-around align-items-center">
             <div class="image w-50">
-                <img src="{{ asset('pictures/' ~ product.image)}}">
+                <img src="{{ asset('pictures/datapics/' ~ product.image)}}" style="height:20rem; width:35rem">
             </div>
-            <div class="card-body my-5 w-50">
-                <h5 class="card-title my-5">{{ product.name }}</h5>
+            <div class="my-5" style="width:40%;">
+                <h5 class="card-title m-0">{{ product.name }}</h5>
                 <p class="card-text">Price: {{ product.price }} €</p>
-                <p class="card-text">Description: {{ product.description }}</p>
+                <p class="card-text">{{ product.description }}</p>
                 <p class="card-text">{{ discount.name }} save {{ discount.amount }}% </p>
                 {% if product.availability == 1 %}
                     <p class="card-text">Availability: available </p>
