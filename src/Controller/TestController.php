@@ -61,6 +61,7 @@ class TestController extends AbstractController
     {
         $user = $doctrine->getRepository(User::class)->find($id);
         $user->setStatus("Good");
+        $user->setDatetime(\DateTime::createFromFormat('Y-m-d', '2000-05-23'));
         $entityManager->persist($user);
         $entityManager->flush();
         return $this->redirectToRoute('app_admin_dashboard');
