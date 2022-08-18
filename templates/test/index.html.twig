@@ -3,7 +3,11 @@
 {% block title %}Welcome to our Store!{% endblock %}
 
 {% block body %}
-
+{% for message in app.flashes('success') %}
+   <div class="alert alert-success">
+    {{ message }}
+   </div>
+{% endfor %}
 {% include "test/_hero.html.twig" %}
 <div class="container">
 {# <div class="tab-content d-flex justify-content-center m-3" id="nav-tabContent">

@@ -22,7 +22,7 @@ class PaymentController extends AbstractController
         public function payment(CartRepository $cart): Response
         {
             $userid = $this->getUser();
-            $items = $cart->findBy(['fkUser' => $userid, 'fkOrder' => NULL]);
+            $items = $cart->findBy(['fk_user' => $userid, 'fk_order' => NULL]);
             $total = 0;
             foreach($items as $value){
                 $price = $value->getFkProduct()->getPrice();
@@ -37,15 +37,15 @@ class PaymentController extends AbstractController
 
 
     #[Route('/success', name: 'app_payment_success')]
-    public function success(CartRepository $cart, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
+    public function success(CartRepository $cart, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-        $items = $cart->findBy(['fkUser' => $user, 'fkOrder' => NULL]);
+        $items = $cart->findBy(['fk_user' => $user, 'fk_order' => NULL]);
         $order = new Order;
         $total = 0;
         foreach($items as $value){
             $price = $value->getFkProduct()->getPrice();
-            $discount = $value->getFkProduct()->getFkDiscount();
+            $discount = $value->getFkProduct()->getFkDiscount()->getAmount();
             $product = $value->getFkProduct();
             $total += $price * ((100-$discount)/100);
             $value->setFkOrder($order);
@@ -56,7 +56,7 @@ class PaymentController extends AbstractController
         
 
         $this->addFlash('success', 'Thanks for payment.');
-        return $this->redirectToRoute('app_shopping_cart');
+        return $this->redirectToRoute('app_test');
     }
 
 

@@ -24,7 +24,7 @@ class ShoppingCartController extends AbstractController
     {
         $fkuser = $this->getUser();
         $cartitem = $doctrine->getRepository(Cart::class);
-        $shopcart = $cartitem->findBy(array('fk_user' => $fkuser, 'status' => "0"));
+        $shopcart = $cartitem->findBy(array('fk_user' => $fkuser, 'status' => "0",'fk_order'=> NULL));
         $total = 0;
         foreach($shopcart as $val){
             $price = $val->getFkProduct()->getPrice();
@@ -80,7 +80,7 @@ class ShoppingCartController extends AbstractController
     public function total(CartRepository $cart, Discount $discount): Response
     {
         $userid = $this->getUser();
-        $products = $cart->findBy(['fkUser' => $userid, 'fkOrder' => NULL]);
+        $products = $cart->findBy(['fk_user' => $userid, 'fk_order' => NULL]);
         $total = 0;
         foreach($products as $val){
             $price = $val->getFkProduct()->getPrice();
