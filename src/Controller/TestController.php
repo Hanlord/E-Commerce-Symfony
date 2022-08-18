@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Controller;
+
+use App\Entity\Cart;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
