@@ -5,7 +5,9 @@
 {% block body %}
   <div class="container my-5" style="min-height:68vh">
     <h1 class="text-center my-5">Dashboard</h1>
+    <h3>Users</h3>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5 text-center">
+    
       {% for user in users %}
         <div class="col">
           <div class="" style="width: 18rem;">
@@ -29,5 +31,24 @@
         <p colspan="7">no records found</p>
       {% endfor %}
     </div>
+    <h3 class="my-5">Statistics</h3>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5 text-center">
+    
+      {% for stat in statistics %}
+        <div class="col">
+          <div class="" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{ stat.datetime|date('F j, Y, g:i a') }}</h5>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <p colspan="7">no records found</p>
+      {% endfor %}
+    </div>
+
+	<a class="btn submit-btn my-5" aria-current="page" href="{{ path('app_category_index')}}">Categories</a>
+	<a class="btn submit-btn" aria-current="page" href="{{ path('app_discount_index')}}">Discount</a>
+  
   </div>
 {% endblock %}

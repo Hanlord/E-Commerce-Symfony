@@ -42,8 +42,10 @@ class TestController extends AbstractController
     public function dashbord(ManagerRegistry $doctrine): Response
     {
         $users = $doctrine->getRepository(User::class)->findAll();
+        $statistics = $doctrine->getRepository(Cart::class)->findAll();
         return $this->render('test/dashboard.html.twig', [
             'users' => $users,
+            'statistics' => $statistics,
         ]);
     }
     #[Route('/admin/dashboard/ban/{id}', name: 'app_admin_dashboard_ban')]
