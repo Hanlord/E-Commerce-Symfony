@@ -3,20 +3,22 @@
 {% block title %}Cart{% endblock %}
 
 {% block body %}
-    <div class="container my-4 ">
+    <div class="container my-4 " style="min-height:75vh;">
       <div class="content1 text-center row justify-content-between">
         <h1>Your Cart</h1>
-        <div class="col-md-8">
+        <div class=" my-5 col-md-6">
           {% for product in products %}
             <div class="row border-top border-bottom">
                 <div class="row main align-items-center">
                   <div class="col-2"><img id="cartimage" class="img-fluid" src="{{asset('pictures/'~ product.fkProduct.image)}}"></div>
                   <div class="col">
-                      <div class="row text-muted">{{product.fkProduct.name}}</div>
-                      <div class="row">{{product.fkProduct.availability}}</div>
-                      <a class="btn btn-danger" href="{{ path('app_product_delete_cart', {'id': product.id}) }}">delete<span class="close">&#10005;</span></a>
+                      <div class="row text-muted">{{product.fkProduct.name}}
+                      <a class=" row btn text-danger" href="{{ path('app_product_delete_cart', {'id': product.id}) }}">Remove</a></div>
+                      {# <div class="row">{{product.fkProduct.availability}}</div> #}
+                      
                   </div>
                   <div class="col">&euro;{{ product.fkProduct.price}}</div>
+                  
                 </div>
               </div>
         {% endfor %}
