@@ -25,6 +25,13 @@ class ProductCrudController extends AbstractController
     #[Route('/product/crud/', name: 'app_product_crud_index', methods: ['GET'])]
     public function index(ProductRepository $productRepository): Response
     {
+        $user = $this->getUser();
+        $now = new \DateTime("now");
+        if ($this->getUser()) {
+            if ($this->getUser()->getDatetime() > $now) {
+                return $this->redirectToRoute('app_profile', ['id' => $this->getUser()->getId()]);
+            }
+        }
         return $this->render('product_crud/index.html.twig', [
             'products' => $productRepository->findAll(),
         ]);

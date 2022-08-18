@@ -20,6 +20,12 @@ class TestController extends AbstractController
     public function index(ManagerRegistry $doctrine): Response
     {
         $user = $this->getUser();
+        $now = new \DateTime("now");
+        if ($this->getUser()) {
+            if ($this->getUser()->getDatetime() > $now) {
+                return $this->redirectToRoute('app_profile', ['id' => $this->getUser()->getId()]);
+            }
+        }
         return $this->render('test/index.html.twig', [
             'user' => $user,
         ]);
@@ -45,6 +51,7 @@ class TestController extends AbstractController
     {
         $user = $doctrine->getRepository(User::class)->find($id);
         $user->setStatus("ban");
+        $user->setDatetime(\DateTime::createFromFormat('Y-m-d', '2350-05-23'));
         $entityManager->persist($user);
         $entityManager->flush();
         return $this->redirectToRoute('app_admin_dashboard');
