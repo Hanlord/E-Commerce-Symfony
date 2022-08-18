@@ -5,43 +5,41 @@
 {% block body %}
 
 <div class="container my-5">
-    <h1 class="text-center">Details</h1>
-<div class="text-center d-flex justify-content-around align-items-center">
-            <div class="image w-50 row rows-col-lg-3 rows-col-md-2 rows-col-sm-1">
-                <img src="{{ asset('pictures/' ~ product.image)}}" style="height:20rem; width:35rem">
-            </div>
-            <div class="my-5" style="width:40%;">
-                <h5 class="card-title m-0">{{ product.name }}</h5>
-                <p class="card-text">Price: {{ product.price }} €</p>
-                <p class="card-text">{{ product.description }}</p>
-                 {% if discount.discountType == "zero" %}
-                <p></p>
-                {% else %}
-                    <p class="card-text">{{ discount.name }} save {{ discount.amount }}% </p>
-                        {% endif %}
-                {% if product.availability == 1 %}
-                    <p class="card-text">Availability: available </p>
-                {% else %}
-                    <p class="card-text">Availability: not available </p>
-                {% endif %}
-                {% if is_granted('ROLE_USER') %} 
-                    <a href="{{ path('app_product_add_cart', {'id': product.id}) }}" class="btn btn-primary">Add to cart</a>
-                {% endif %}
-            </div>
+    <h1 class="text-center my-5">Details</h1>
+    <div class="text-center row row-cols-md-2 row-cols-1 flex-column flex-md-row">
+        <div class="row">
+            <img src="{{ asset('pictures/' ~ product.image)}}" style="height:20rem;">
         </div>
-    <div>
-        <h6>Reviews</h6>
+        <div class="my-5 col">
+            <h5 class="card-title m-0">{{ product.name }}</h5>
+            <p class="card-text">Price: {{ product.price }} €</p>
+            <p class="card-text">{{ product.description }}</p>
+            {% if discount.discountType == "zero" %}
+            <p></p>
+            {% else %}
+            <p class="card-text">{{ discount.name }} save {{ discount.amount }}% </p>
+            {% endif %} {% if product.availability == 1 %}
+            <p class="card-text">Availability: available </p>
+            {% else %}
+            <p class="card-text">Availability: not available </p>
+            {% endif %} {% if is_granted('ROLE_USER') %}
+            <a href="{{ path('app_product_add_cart', {'id': product.id}) }}" class="btn submit-btn">Add to cart</a> {% endif %} {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('app_product_crud_edit', {'id': product.id}) }}" class="btn edit-btn">Edit</a> {{ include('product_crud/_delete_form.html.twig') }} {% endif %}
+        </div>
+    </div>
+
+        <h6 class="text-center my-5"> Reviews</h6>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-5 text-center">
             {% for review in reviews %}
             <div class="col">
                 <div class="" style="width: 18rem;">
                     <div class="card-body mt-3">
                         <h5 class="card-title">{{ review.title }}</h5>
-                        <p class="card-text">{{ review.rating }}</p>
-                        <p class="card-text">{{ review.message }}</p>
-                        <p class="card-text">{{ review.fkUser.name }}</p>
+                        <p class="card-text">{{ review.rating }} 💛</p>
+                        <p class="card-text">comment: {{ review.message }}</p>
+                        <p class="card-text">from: {{ review.fkUser.name }}</p>
                         {% if is_granted('ROLE_ADMIN') %}
-                            <a href="{{ path('app_product_delete_review', {'id': review.id}) }}"  class="btn edit-btn">Delete</a>
+                            <a href="{{ path('app_product_delete_review', {'id': review.id}) }}"  class="btn delete-btn">Delete</a>
                         {% endif %}
                     </div>
                 </div>
@@ -50,17 +48,12 @@
             <p colspan="7">no records found</p>
             {% endfor %}
         </div>
-    </div>
         {{ form_start(reviewform) }}
             {{ form_widget(reviewform,{'attr': {'class': 'row g-3 mb-3'}}) }}
         {{ form_end(reviewform) }}
 
     {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('app_product_crud_index') }}">back to list</a>
-
-    <a href="{{ path('app_product_crud_edit', {'id': product.id}) }}">edit</a>
-
-    {{ include('product_crud/_delete_form.html.twig') }}
-        {% endif %}
-        </div>
+    <a href="{{ path('app_product_crud_index') }}" class="fs-4">back to list</a> 
+    {% endif %}
+</div>
 {% endblock %}
